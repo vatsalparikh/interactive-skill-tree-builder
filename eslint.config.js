@@ -9,6 +9,7 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import reactX from 'eslint-plugin-react-x';
 import reactDom from 'eslint-plugin-react-dom';
+import licenseHeader from 'eslint-plugin-license-header';
 
 export default defineConfig([
   globalIgnores(['dist']),
@@ -41,6 +42,23 @@ export default defineConfig([
     rules: {
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
+    },
+  },
+  {
+    files: ['src/**/*.{js,ts,jsx,tsx}'],
+    plugins: {
+      'license-header': licenseHeader,
+    },
+    rules: {
+      'license-header/header': [
+        'error',
+        [
+          '/*',
+          ' * Copyright (c) 2025',
+          ' * This software may be modified and distributed under the terms of the MIT license.',
+          ' */',
+        ],
+      ],
     },
   },
 ]);

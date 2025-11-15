@@ -3,8 +3,6 @@
  * This software may be modified and distributed under the terms of the MIT license.
  */
 
-function App() {
-  return <div>Hello world!</div>;
+export default function SkillNode() {
+  return <div>this is a skill node</div>;
 }
-
-export default App;

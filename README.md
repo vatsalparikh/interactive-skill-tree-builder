@@ -1,5 +1,5 @@
-## Setup instructions (e.g., npm install && npm start).
+## Setup instructions
 
-## List of completed bonuses.
+## List of completed bonuses
 
 ## Disclosure of any AI tool usage
