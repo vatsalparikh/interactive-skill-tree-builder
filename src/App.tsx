@@ -3,7 +3,7 @@
  * This software may be modified and distributed under the terms of the MIT license.
  */
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   applyEdgeChanges,
   applyNodeChanges,
@@ -17,11 +17,22 @@ import Flow from './components/Flow';
 import SkillForm from './components/SkillForm';
 import { createSkillNode } from './helpers/create-node';
 import { addConnection, validateConnection } from './helpers/edge-utils';
+import { loadTree, saveTree } from './helpers/local-storage';
+import { canUnlock, unlockSkill } from './helpers/unlock-utils';
 import type { SkillFormData, SkillNodeType } from './types';
 
 function App() {
-  const [skills, setSkills] = useState<SkillNodeType[]>([]);
-  const [prereqs, setPrereqs] = useState<Edge[]>([]);
+  const savedTree = loadTree();
+  const [skills, setSkills] = useState<SkillNodeType[]>(savedTree?.skills ?? []);
+  const [prereqs, setPrereqs] = useState<Edge[]>(savedTree?.prereqs ?? []);
+
+  useEffect(() => {
+    saveTree({ skills, prereqs });
+  }, [skills, prereqs]);
+
+  const handleAddSkill = (data: SkillFormData) => {
+    setSkills((prev) => [...prev, createSkillNode(data)]);
+  };
 
   // typical React Flow event handler for node changes
   const handleNodesChange = useCallback((changes: NodeChange[]) => {
@@ -44,9 +55,14 @@ function App() {
     [prereqs],
   );
 
-  const handleAddSkill = (data: SkillFormData) => {
-    setSkills((prev) => [...prev, createSkillNode(data)]);
-  };
+  const handleUnlock = useCallback(
+    (id: string) => {
+      if (!canUnlock(skills, prereqs, id)) return;
+      setSkills((prev) => unlockSkill(prev, id));
+    },
+    [skills, prereqs],
+  );
+
   return (
     <div className='flex h-screen'>
       <div className='w-1/5'>
@@ -59,6 +75,7 @@ function App() {
           onNodesChange={handleNodesChange}
           onEdgesChange={handleEdgesChange}
           onConnect={handleConnect}
+          onUnlock={handleUnlock}
         />
       </div>
     </div>

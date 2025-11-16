@@ -8,6 +8,7 @@ import ReactFlow, {
   Controls,
   type Edge,
   MarkerType,
+  type NodeMouseHandler,
   type NodeTypes,
   type OnConnect,
   type OnEdgesChange,
@@ -27,6 +28,7 @@ interface FlowProps {
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
+  onUnlock: (id: string) => void;
 }
 
 export default function Flow({
@@ -35,7 +37,13 @@ export default function Flow({
   onNodesChange,
   onEdgesChange,
   onConnect,
+  onUnlock,
 }: FlowProps) {
+  const handleNodeClick: NodeMouseHandler = (_evt, node) => {
+    if (node.type !== 'skill') return;
+    onUnlock(node.id);
+  };
+
   return (
     <div className='h-full w-full'>
       <ReactFlow
@@ -45,9 +53,10 @@ export default function Flow({
         edges={prereqs}
         onEdgesChange={onEdgesChange}
         defaultEdgeOptions={{
-          markerStart: { type: MarkerType.ArrowClosed },
+          markerEnd: { type: MarkerType.ArrowClosed },
         }}
         onConnect={onConnect}
+        onNodeClick={handleNodeClick}
         fitView
       >
         <Background />

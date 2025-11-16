@@ -10,7 +10,10 @@ export function createSkillNode(data: SkillFormData): SkillNodeType {
     id: crypto.randomUUID(),
     type: 'skill',
     position: { x: 200, y: 100 },
-    data,
+    data: {
+      ...data,
+      isUnlocked: false,
+    },
     // TODO: fix styling to use tailwind css
     style: {
       width: 160,

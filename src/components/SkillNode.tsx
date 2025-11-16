@@ -9,9 +9,19 @@ import type { SkillData } from '../types';
 
 export default function SkillNode({ data }: NodeProps<SkillData>) {
   return (
-    <article>
-      <Handle type='source' position={Position.Top} />
-      <Handle type='target' position={Position.Bottom} />
+    /* TODO fix css styling */
+    <article
+      style={{
+        background: data.isUnlocked ? 'lightgreen' : 'lightgray',
+        padding: 8,
+        border: '1px solid black',
+        borderRadius: 6,
+        width: 100,
+      }}
+    >
+      <Handle type='source' position={Position.Bottom} />
+      <Handle type='target' position={Position.Top} />
+
       <div>Name: {data.name}</div>
       {data.level !== undefined && <div>Level: {data.level}</div>}
       <div>Description: {data.description}</div>

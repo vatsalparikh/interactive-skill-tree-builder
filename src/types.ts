@@ -11,7 +11,9 @@ export interface SkillFormData {
   level?: number; // optional, >= 0
 }
 
-export interface SkillData extends SkillFormData {}
+export interface SkillData extends SkillFormData {
+  isUnlocked: boolean;
+}
 
 /*
 This page shows how custom nodes are created: https://reactflow.dev/learn/tutorials/slide-shows-with-react-flow
