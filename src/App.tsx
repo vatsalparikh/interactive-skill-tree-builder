@@ -20,6 +20,7 @@ import { addConnection, validateConnection } from './helpers/edge-utils';
 import { loadTree, saveTree } from './helpers/local-storage';
 import { canUnlock, unlockSkill } from './helpers/unlock-utils';
 import type { SkillFormData, SkillNodeType } from './types';
+import { hasCycle } from './helpers/detect-cycle';
 
 function App() {
   const savedTree = loadTree();
@@ -48,7 +49,22 @@ function App() {
   // connection logic is implemented in edge-utils.ts file
   const handleConnect = useCallback(
     (connection: Connection): void => {
-      if (!validateConnection(prereqs, connection)) return;
+      const { source, target } = connection;
+
+      if (!source || !target) {
+        alert('Invalid connection (missing endpoints).');
+        return;
+      }
+
+      if (!validateConnection(prereqs, connection)) {
+        alert('Invalid connection (self-loop or duplicate).');
+        return;
+      }
+
+      if (hasCycle(prereqs, source, target)) {
+        alert('Cannot create circular prerequisites.');
+        return;
+      }
 
       setPrereqs((prev: Edge[]) => addConnection(prev, connection));
     },
