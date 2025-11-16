@@ -1,4 +1,7 @@
-/* React Flow's own styles */
+/* 
+https://reactflow.dev/learn
+React Flow's own styles
+*/
 @import 'reactflow/dist/style.css';
 
 @tailwind base;

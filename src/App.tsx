@@ -7,13 +7,14 @@ import { useState } from 'react';
 
 import Flow from './components/Flow';
 import SkillForm from './components/SkillForm';
-import type { SkillFormData } from './types';
+import type { SkillFormData, SkillNodeType } from './types';
+import { createSkillNode } from './logic/create-skill-node';
 
 function App() {
-  const [skills, setSkills] = useState<SkillFormData[]>([]);
+  const [skills, setSkills] = useState<SkillNodeType[]>([]);
 
   const handleAddSkill = (data: SkillFormData) => {
-    setSkills((prev) => [...prev, data]);
+    setSkills((prev) => [...prev, createSkillNode(data)]);
     console.log('form submitted');
   };
   return (
@@ -22,7 +23,7 @@ function App() {
         <SkillForm onSubmit={handleAddSkill} />
       </div>
       <div className='w-4/5'>
-        <Flow />
+        <Flow skills={skills} />
       </div>
     </div>
   );
