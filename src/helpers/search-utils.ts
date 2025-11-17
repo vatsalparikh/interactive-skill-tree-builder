@@ -1,4 +1,10 @@
+/*
+ * Copyright (c) 2025
+ * This software may be modified and distributed under the terms of the MIT license.
+ */
+
 import type { Edge } from 'reactflow';
+
 import type { SkillNode } from '../types';
 
 export function getAncestorNodeIds(edges: Edge[], targets: Set<string>) {
@@ -29,7 +35,9 @@ export function getHighlightedNodeIds(
   if (!trimmedQuery) return new Set();
 
   const matches = new Set(
-    skills.filter((skill) => skill.data.name.toLocaleLowerCase().includes(trimmedQuery)).map((skill) => skill.id),
+    skills
+      .filter((skill) => skill.data.name.toLocaleLowerCase().includes(trimmedQuery))
+      .map((skill) => skill.id),
   );
   if (matches.size === 0) return new Set();
 

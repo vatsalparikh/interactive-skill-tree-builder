@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2025
- * This software may be modified and distributed under the terms
- * of the MIT license.
+ * This software may be modified and distributed under the terms of the MIT license.
  */
 
 import {
@@ -13,11 +12,11 @@ import {
   type NodeChange,
 } from 'reactflow';
 
-import { addConnection, validateConnection } from '../helpers/edge-utils';
+import { createSkillNode } from '../helpers/create-node';
 import { hasCycle } from '../helpers/detect-cycle';
+import { addConnection, validateConnection } from '../helpers/edge-utils';
 import { canUnlock, unlockSkill } from '../helpers/unlock-utils';
 import type { SkillFormData, SkillNode } from '../types';
-import { createSkillNode } from '../helpers/create-node';
 
 export function createHandlers(
   skills: SkillNode[],

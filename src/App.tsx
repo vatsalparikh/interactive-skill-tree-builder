@@ -7,20 +7,12 @@ import { useEffect, useMemo, useState } from 'react';
 import { type Edge } from 'reactflow';
 
 import Flow from './components/Flow';
-import SkillForm from './components/SkillForm';
-import { loadTree, saveTree } from './helpers/local-storage';
-import type { SkillNode } from './types';
-
-import { createHandlers } from './handlers/flow-handlers';
-
-
-
 import SearchBar from './components/SearchBar';
-
-import {
-  getHighlightedNodeIds,
-  getHighlightedEdgeIds,
-} from './helpers/search-utils';
+import SkillForm from './components/SkillForm';
+import { createHandlers } from './handlers/flow-handlers';
+import { loadTree, saveTree } from './helpers/local-storage';
+import { getHighlightedEdgeIds, getHighlightedNodeIds } from './helpers/search-utils';
+import type { SkillNode } from './types';
 
 function App() {
   const savedTree = loadTree();
@@ -43,7 +35,6 @@ function App() {
     () => getHighlightedEdgeIds(prereqs, highlightedNodeIds),
     [prereqs, highlightedNodeIds],
   );
-
 
   return (
     <div className='flex h-screen'>

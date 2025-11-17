@@ -47,30 +47,30 @@ export default function Flow({
     if (node.type === 'skill') onUnlock(node.id);
   };
 
-const viewSkills = skills.map((n) => ({
-  ...n,
-  style: highlightedNodeIds.size
-    ? highlightedNodeIds.has(n.id)
-      ? {
-          ...n.style,
-          opacity: 1,
-          boxShadow: '0 0 8px 2px gold',
-        }
-      : {
-          ...n.style,
-          opacity: 0.25,
-        }
-    : n.style,
-}));
-
+  const viewSkills = skills.map((n) => ({
+    ...n,
+    style: highlightedNodeIds.size
+      ? highlightedNodeIds.has(n.id)
+        ? {
+            ...n.style,
+            opacity: 1,
+            boxShadow: '0 0 8px 2px gold',
+          }
+        : {
+            ...n.style,
+            opacity: 0.25,
+          }
+      : n.style,
+  }));
 
   const viewPrereqs = prereqs.map((e) => ({
     ...e,
-    style: highlightedEdgeIds.size && highlightedEdgeIds.has(e.id)
-      ? { stroke: '#f59e0b', strokeWidth: 2.5 } // amber-500
-      : highlightedEdgeIds.size
-        ? { opacity: 0.35 }
-        : undefined,
+    style:
+      highlightedEdgeIds.size && highlightedEdgeIds.has(e.id)
+        ? { stroke: '#f59e0b', strokeWidth: 2.5 } // amber-500
+        : highlightedEdgeIds.size
+          ? { opacity: 0.35 }
+          : undefined,
     markerEnd: { type: MarkerType.ArrowClosed },
   }));
 
