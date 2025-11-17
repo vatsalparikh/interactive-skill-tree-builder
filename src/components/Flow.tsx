@@ -15,20 +15,22 @@ import ReactFlow, {
   type OnNodesChange,
 } from 'reactflow';
 
-import type { SkillNodeType } from '../types';
-import SkillNode from './SkillNode';
+import type { SkillNode } from '../types';
+import SkillView from './SkillView';
 
 const nodeTypes: NodeTypes = {
-  skill: SkillNode,
+  skill: SkillView,
 };
 
 interface FlowProps {
-  skills: SkillNodeType[];
+  skills: SkillNode[];
   prereqs: Edge[];
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
   onUnlock: (id: string) => void;
+  highlightedNodeIds: Set<string>;
+  highlightedEdgeIds: Set<string>;
 }
 
 export default function Flow({
@@ -38,19 +40,39 @@ export default function Flow({
   onEdgesChange,
   onConnect,
   onUnlock,
+  highlightedNodeIds,
+  highlightedEdgeIds,
 }: FlowProps) {
   const handleNodeClick: NodeMouseHandler = (_evt, node) => {
-    if (node.type !== 'skill') return;
-    onUnlock(node.id);
+    if (node.type === 'skill') onUnlock(node.id);
   };
+
+const viewSkills = skills.map((n) => ({
+  ...n,
+  className: highlightedNodeIds.size
+    ? highlightedNodeIds.has(n.id)
+      ? 'skill-node skill-node--highlighted'
+      : 'skill-node skill-node--dimmed'
+    : 'skill-node',
+}));
+
+  const viewPrereqs = prereqs.map((e) => ({
+    ...e,
+    style: highlightedEdgeIds.size && highlightedEdgeIds.has(e.id)
+      ? { stroke: '#f59e0b', strokeWidth: 2.5 } // amber-500
+      : highlightedEdgeIds.size
+        ? { opacity: 0.35 }
+        : undefined,
+    markerEnd: { type: MarkerType.ArrowClosed },
+  }));
 
   return (
     <div className='h-full w-full'>
       <ReactFlow
-        nodes={skills}
+        nodes={viewSkills}
+        edges={viewPrereqs}
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
-        edges={prereqs}
         onEdgesChange={onEdgesChange}
         defaultEdgeOptions={{
           markerEnd: { type: MarkerType.ArrowClosed },

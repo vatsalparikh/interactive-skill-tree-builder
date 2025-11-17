@@ -3,9 +3,9 @@
  * This software may be modified and distributed under the terms of the MIT license.
  */
 
-import type { SkillFormData, SkillNodeType } from '../types';
+import type { SkillFormData, SkillNode } from '../types';
 
-export function createSkillNode(data: SkillFormData): SkillNodeType {
+export function createSkillNode(data: SkillFormData): SkillNode {
   return {
     id: crypto.randomUUID(),
     type: 'skill',

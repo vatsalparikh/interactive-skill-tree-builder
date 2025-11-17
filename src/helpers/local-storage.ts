@@ -5,12 +5,12 @@
 
 import type { Edge } from 'reactflow';
 
-import type { SkillNodeType } from '../types';
+import type { SkillNode } from '../types';
 
 const STORAGE_KEY = 'skill-tree-state';
 
 export interface SkillTree {
-  skills: SkillNodeType[];
+  skills: SkillNode[];
   prereqs: Edge[];
 }
 

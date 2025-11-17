@@ -3,86 +3,52 @@
  * This software may be modified and distributed under the terms of the MIT license.
  */
 
-import { useEffect, useState } from 'react';
-import {
-  type Edge,
-} from 'reactflow';
+import { useEffect, useMemo, useState } from 'react';
+import { type Edge } from 'reactflow';
 
 import Flow from './components/Flow';
 import SkillForm from './components/SkillForm';
 import { loadTree, saveTree } from './helpers/local-storage';
-import type { SkillNodeType } from './types';
+import type { SkillNode } from './types';
 
 import { createHandlers } from './handlers/flow-handlers';
 
+
+
+import SearchBar from './components/SearchBar';
+
+import {
+  getHighlightedNodeIds,
+  getHighlightedEdgeIds,
+} from './helpers/search-utils';
+
 function App() {
   const savedTree = loadTree();
-  const [skills, setSkills] = useState<SkillNodeType[]>(savedTree?.skills ?? []);
+  const [skills, setSkills] = useState<SkillNode[]>(savedTree?.skills ?? []);
   const [prereqs, setPrereqs] = useState<Edge[]>(savedTree?.prereqs ?? []);
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     saveTree({ skills, prereqs });
   }, [skills, prereqs]);
 
-const {
-  handleAddSkill,
-  handleNodesChange,
-  handleEdgesChange,
-  handleConnect,
-  handleUnlock,
-} = createHandlers(skills, prereqs, setSkills, setPrereqs);
+  const { handleAddSkill, handleNodesChange, handleEdgesChange, handleConnect, handleUnlock } =
+    createHandlers(skills, prereqs, setSkills, setPrereqs);
 
-  // const handleAddSkill = (data: SkillFormData) => {
-  //   setSkills((prev) => [...prev, createSkillNode(data)]);
-  // };
+  const highlightedNodeIds = useMemo(
+    () => getHighlightedNodeIds(skills, prereqs, query),
+    [skills, prereqs, query],
+  );
+  const highlightedEdgeIds = useMemo(
+    () => getHighlightedEdgeIds(prereqs, highlightedNodeIds),
+    [prereqs, highlightedNodeIds],
+  );
 
-  // // typical React Flow event handler for node changes
-  // const handleNodesChange = useCallback((changes: NodeChange[]) => {
-  //   setSkills((prev) => applyNodeChanges(changes, prev) as SkillNodeType[]);
-  // }, []);
-
-  // // typical React Flow event handler for edge changes
-  // const handleEdgesChange = useCallback((changes: EdgeChange[]) => {
-  //   setPrereqs((prev) => applyEdgeChanges(changes, prev));
-  // }, []);
-
-  // // typical React Flow event handler for connections
-  // // connection logic is implemented in edge-utils.ts file
-  // const handleConnect = useCallback(
-  //   (connection: Connection): void => {
-  //     const { source, target } = connection;
-
-  //     if (!source || !target) {
-  //       alert('Invalid connection (missing endpoints).');
-  //       return;
-  //     }
-
-  //     if (!validateConnection(prereqs, connection)) {
-  //       alert('Invalid connection (self-loop or duplicate).');
-  //       return;
-  //     }
-
-  //     if (hasCycle(prereqs, source, target)) {
-  //       alert('Cannot create circular prerequisites.');
-  //       return;
-  //     }
-
-  //     setPrereqs((prev: Edge[]) => addConnection(prev, connection));
-  //   },
-  //   [prereqs],
-  // );
-
-  // const handleUnlock = useCallback(
-  //   (id: string) => {
-  //     if (!canUnlock(skills, prereqs, id)) return;
-  //     setSkills((prev) => unlockSkill(prev, id));
-  //   },
-  //   [skills, prereqs],
-  // );
 
   return (
     <div className='flex h-screen'>
       <div className='w-1/5'>
+        <SearchBar value={query} onChange={setQuery} />
         <SkillForm onSubmit={handleAddSkill} />
       </div>
       <div className='w-4/5'>
@@ -93,6 +59,8 @@ const {
           onEdgesChange={handleEdgesChange}
           onConnect={handleConnect}
           onUnlock={handleUnlock}
+          highlightedNodeIds={highlightedNodeIds}
+          highlightedEdgeIds={highlightedEdgeIds}
         />
       </div>
     </div>

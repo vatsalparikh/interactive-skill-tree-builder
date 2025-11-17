@@ -15,3 +15,24 @@ body,
   padding: 0;
   height: 100%;
 }
+
+.skill-node {
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 6px;
+  padding: 8px;
+  transition: opacity 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+/* Highlighted node */
+.skill-node--highlighted {
+  border-color: #f59e0b;       /* amber-500 */
+  box-shadow: 0 0 6px #f59e0b;
+  opacity: 1;
+}
+
+/* Dimmed node */
+.skill-node--dimmed {
+  opacity: 0.35;
+}
+

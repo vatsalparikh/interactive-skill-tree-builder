@@ -16,13 +16,13 @@ import {
 import { addConnection, validateConnection } from '../helpers/edge-utils';
 import { hasCycle } from '../helpers/detect-cycle';
 import { canUnlock, unlockSkill } from '../helpers/unlock-utils';
-import type { SkillFormData, SkillNodeType } from '../types';
+import type { SkillFormData, SkillNode } from '../types';
 import { createSkillNode } from '../helpers/create-node';
 
 export function createHandlers(
-  skills: SkillNodeType[],
+  skills: SkillNode[],
   prereqs: Edge[],
-  setSkills: (fn: (prev: SkillNodeType[]) => SkillNodeType[]) => void,
+  setSkills: (fn: (prev: SkillNode[]) => SkillNode[]) => void,
   setPrereqs: (fn: (prev: Edge[]) => Edge[]) => void,
 ) {
   function handleAddSkill(data: SkillFormData): void {
@@ -30,7 +30,7 @@ export function createHandlers(
   }
 
   function handleNodesChange(changes: NodeChange[]): void {
-    setSkills((prev) => applyNodeChanges(changes, prev) as SkillNodeType[]);
+    setSkills((prev) => applyNodeChanges(changes, prev) as SkillNode[]);
   }
 
   function handleEdgesChange(changes: EdgeChange[]): void {

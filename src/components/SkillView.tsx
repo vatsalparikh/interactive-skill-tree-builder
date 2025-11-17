@@ -7,7 +7,7 @@ import { Handle, type NodeProps, Position } from 'reactflow';
 
 import type { SkillData } from '../types';
 
-export default function SkillNode({ data }: NodeProps<SkillData>) {
+export default function SkillView({ data }: NodeProps<SkillData>) {
   return (
     /* TODO fix css styling */
     <article

@@ -5,9 +5,9 @@
 
 import type { Edge } from 'reactflow';
 
-import type { SkillNodeType } from '../types';
+import type { SkillNode } from '../types';
 
-export function canUnlock(nodes: SkillNodeType[], edges: Edge[], skillId: string): boolean {
+export function canUnlock(nodes: SkillNode[], edges: Edge[], skillId: string): boolean {
   const prereqs = edges.filter((edge) => edge.target === skillId).map((edge) => edge.source);
   if (prereqs.length === 0) return true;
 
@@ -17,7 +17,7 @@ export function canUnlock(nodes: SkillNodeType[], edges: Edge[], skillId: string
   });
 }
 
-export function unlockSkill(nodes: SkillNodeType[], skillId: string): SkillNodeType[] {
+export function unlockSkill(nodes: SkillNode[], skillId: string): SkillNode[] {
   return nodes.map((node) =>
     node.id === skillId ? { ...node, data: { ...node.data, isUnlocked: true } } : node,
   );
