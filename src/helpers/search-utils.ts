@@ -29,12 +29,12 @@ export function getHighlightedNodeIds(
   if (!trimmedQuery) return new Set();
 
   const matches = new Set(
-    skills.filter((skill) => skill.data.name.includes(trimmedQuery)).map((skill) => skill.id),
+    skills.filter((skill) => skill.data.name.toLocaleLowerCase().includes(trimmedQuery)).map((skill) => skill.id),
   );
   if (matches.size === 0) return new Set();
 
   const ancestors = getAncestorNodeIds(edges, matches);
-  return new Set(...matches, ...ancestors);
+  return new Set([...matches, ...ancestors]);
 }
 
 export function getHighlightedEdgeIds(edges: Edge[], highlightedNodeIds: Set<string>): Set<string> {

@@ -49,12 +49,20 @@ export default function Flow({
 
 const viewSkills = skills.map((n) => ({
   ...n,
-  className: highlightedNodeIds.size
+  style: highlightedNodeIds.size
     ? highlightedNodeIds.has(n.id)
-      ? 'skill-node skill-node--highlighted'
-      : 'skill-node skill-node--dimmed'
-    : 'skill-node',
+      ? {
+          ...n.style,
+          opacity: 1,
+          boxShadow: '0 0 8px 2px gold',
+        }
+      : {
+          ...n.style,
+          opacity: 0.25,
+        }
+    : n.style,
 }));
+
 
   const viewPrereqs = prereqs.map((e) => ({
     ...e,
