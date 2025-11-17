@@ -47,32 +47,43 @@ export default function Flow({
     if (node.type === 'skill') onUnlock(node.id);
   };
 
-  const viewSkills = skills.map((n) => ({
-    ...n,
-    style: highlightedNodeIds.size
-      ? highlightedNodeIds.has(n.id)
-        ? {
-            ...n.style,
-            opacity: 1,
-            boxShadow: '0 0 8px 2px gold',
-          }
-        : {
-            ...n.style,
-            opacity: 0.25,
-          }
-      : n.style,
-  }));
+  const viewSkills = skills.map((n) => {
+    const isHighlighted = highlightedNodeIds.has(n.id);
+    const isDimming = highlightedNodeIds.size > 0 && !isHighlighted;
 
-  const viewPrereqs = prereqs.map((e) => ({
-    ...e,
-    style:
-      highlightedEdgeIds.size && highlightedEdgeIds.has(e.id)
-        ? { stroke: '#f59e0b', strokeWidth: 2.5 } // amber-500
-        : highlightedEdgeIds.size
-          ? { opacity: 0.35 }
-          : undefined,
-    markerEnd: { type: MarkerType.ArrowClosed },
-  }));
+    return {
+      ...n,
+      className: `
+      transition-opacity transition-shadow duration-150
+      ${
+        isHighlighted
+          ? 'opacity-100 shadow-[0_0_8px_2px_gold]'
+          : isDimming
+            ? 'opacity-25'
+            : 'opacity-100'
+      }
+    `,
+    };
+  });
+
+  const viewPrereqs = prereqs.map((e) => {
+    const isHighlighted = highlightedEdgeIds.has(e.id);
+    const isDimming = highlightedEdgeIds.size > 0 && !isHighlighted;
+
+    return {
+      ...e,
+      className: `
+      ${
+        isHighlighted
+          ? '[&>path]:stroke-amber-500 [&>path]:stroke-[2.5]'
+          : isDimming
+            ? '[&>path]:opacity-35'
+            : ''
+      }
+    `,
+      markerEnd: { type: MarkerType.ArrowClosed },
+    };
+  });
 
   return (
     <div className='h-full w-full'>

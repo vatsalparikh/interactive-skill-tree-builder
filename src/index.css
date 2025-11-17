@@ -4,9 +4,7 @@ React Flow's own styles
 */
 @import 'reactflow/dist/style.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 html,
 body,

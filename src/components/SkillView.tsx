@@ -8,16 +8,18 @@ import { Handle, type NodeProps, Position } from 'reactflow';
 import type { SkillData } from '../types';
 
 export default function SkillView({ data }: NodeProps<SkillData>) {
+  const unlocked = data.isUnlocked;
+
   return (
-    /* TODO fix css styling */
     <article
-      style={{
-        background: data.isUnlocked ? 'lightgreen' : 'lightgray',
-        padding: 8,
-        border: '1px solid black',
-        borderRadius: 6,
-        width: 100,
-      }}
+      className={`
+        w-[160px] h-[80px] 
+        box-border overflow-auto
+        border-2 border-black rounded-md 
+        p-3
+        transition-colors duration-200
+        ${unlocked ? 'bg-green-200' : 'bg-gray-200'}
+      `}
     >
       <Handle type='source' position={Position.Bottom} />
       <Handle type='target' position={Position.Top} />

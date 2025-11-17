@@ -10,7 +10,7 @@ interface SearchBarProps {
 
 export default function SearchBar({ value, onChange }: SearchBarProps) {
   return (
-    <div className='p-3 border-b'>
+    <div className='p-3'>
       <label htmlFor='skill-search' className='block mb-1 font-medium'>
         Search Skills
       </label>
