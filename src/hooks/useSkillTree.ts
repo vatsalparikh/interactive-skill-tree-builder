@@ -80,7 +80,6 @@ export function useSkillTree() {
       if (skill) {
         showSuccessToast(`You've unlocked ${skill.data.name} 🔥`);
       }
-      setSkills((prev) => unlockSkill(prev, id));
     },
     [skills, prereqs],
   );
@@ -96,3 +95,5 @@ export function useSkillTree() {
     handleUnlock,
   };
 }
+
+export default useSkillTree;
