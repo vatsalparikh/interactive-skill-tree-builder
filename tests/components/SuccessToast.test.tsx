@@ -8,7 +8,7 @@ import React from 'react';
 import { toast } from 'react-hot-toast';
 import { beforeEach, describe, expect, it, type MockedFunction, vi } from 'vitest';
 
-import { showSuccessToast } from './SuccessToast';
+import { showSuccessToast } from '../../src/components/SuccessToast';
 
 // -------------------------------------------------------------
 // Types for the toast element props and toast.custom

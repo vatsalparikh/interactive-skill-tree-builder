@@ -6,7 +6,7 @@
 import type { Edge } from 'reactflow';
 import { describe, expect, it } from 'vitest';
 
-import { buildGraph, hasCycle, hasPath } from './detect-cycle';
+import { buildGraph, hasCycle, hasPath } from '../../src/helpers/detect-cycle';
 
 describe('buildGraph', () => {
   it('builds a graph adjacency list from edges', () => {

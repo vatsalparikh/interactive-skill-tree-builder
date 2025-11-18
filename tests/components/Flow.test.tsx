@@ -7,9 +7,9 @@ import { render } from '@testing-library/react';
 import type { Edge } from 'reactflow';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { SkillNode } from '../types';
-import Flow from './Flow';
-import SkillView from './SkillView';
+import type { SkillNode } from '../../src/types';
+import Flow from '../../src/components/Flow';
+import SkillView from '../../src/components/SkillView';
 
 // ---- Types for the ReactFlow mock ----
 

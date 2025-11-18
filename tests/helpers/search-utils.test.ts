@@ -6,8 +6,12 @@
 import type { Edge } from 'reactflow';
 import { describe, expect, it } from 'vitest';
 
-import type { SkillNode } from '../types';
-import { getAncestorNodeIds, getHighlightedEdgeIds, getHighlightedNodeIds } from './search-utils';
+import type { SkillNode } from '../../src/types';
+import {
+  getAncestorNodeIds,
+  getHighlightedEdgeIds,
+  getHighlightedNodeIds,
+} from '../../src/helpers/search-utils';
 
 function makeSkill(id: string, name: string, extras?: Partial<SkillNode['data']>): SkillNode {
   return {

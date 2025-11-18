@@ -5,8 +5,8 @@
 
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { SkillFormData } from '../types';
-import { createSkillNode } from './create-node';
+import type { SkillFormData } from '../../src/types';
+import { createSkillNode } from '../../src/helpers/create-node';
 
 describe('createSkillNode', () => {
   const formData: SkillFormData = {

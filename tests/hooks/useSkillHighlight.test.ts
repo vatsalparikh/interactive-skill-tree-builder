@@ -7,8 +7,8 @@ import { renderHook } from '@testing-library/react';
 import { type Edge, MarkerType } from 'reactflow';
 import { describe, expect, it } from 'vitest';
 
-import type { SkillNode } from '../types';
-import useSkillHighlight from './useSkillHighlight';
+import type { SkillNode } from '../../src/types';
+import useSkillHighlight from '../../src/hooks/useSkillHighlight';
 
 function makeSkill(id: string, name: string): SkillNode {
   return {

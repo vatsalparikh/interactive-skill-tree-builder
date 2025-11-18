@@ -6,7 +6,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { SkillLegend } from './SkillLegend';
+import { SkillLegend } from '../../src/components/SkillLegend';
 
 describe('SkillLegend', () => {
   it('renders all legend items', () => {

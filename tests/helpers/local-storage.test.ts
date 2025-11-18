@@ -6,8 +6,8 @@
 import type { Edge } from 'reactflow';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { SkillNode } from '../types';
-import { loadTree, saveTree, type SkillTree } from './local-storage';
+import type { SkillNode } from '../../src/types';
+import { loadTree, saveTree, type SkillTree } from '../../src/helpers/local-storage';
 
 const STORAGE_KEY = 'skill-tree-state';
 

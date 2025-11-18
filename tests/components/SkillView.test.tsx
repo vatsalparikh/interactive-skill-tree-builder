@@ -29,7 +29,7 @@ vi.mock('reactflow', () => {
 });
 
 // Import the component under test after mocking reactflow.
-import SkillView from './SkillView';
+import SkillView from '../../src/components/SkillView';
 
 describe('SkillView', () => {
   it('renders locked (default) state with name and description and no level', () => {

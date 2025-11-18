@@ -6,8 +6,8 @@
 import type { Edge } from 'reactflow';
 import { describe, expect, it } from 'vitest';
 
-import type { SkillNode } from '../types';
-import { canUnlock, unlockSkill } from './unlock-utils';
+import type { SkillNode } from '../../src/types';
+import { canUnlock, unlockSkill } from '../../src/helpers/unlock-utils';
 
 function makeSkill(id: string, isUnlocked: boolean): SkillNode {
   return {

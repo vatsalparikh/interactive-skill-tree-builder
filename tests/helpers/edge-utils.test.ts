@@ -12,7 +12,7 @@ import {
   isDuplicateEdge,
   isSelfLoop,
   validateConnection,
-} from './edge-utils';
+} from '../../src/helpers/edge-utils';
 
 function makeConn(source: string | null, target: string | null): Connection {
   return {

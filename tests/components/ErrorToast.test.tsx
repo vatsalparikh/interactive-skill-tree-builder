@@ -6,7 +6,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { ErrorToast } from './ErrorToast';
+import { ErrorToast } from '../../src/components/ErrorToast';
 
 describe('ErrorToast', () => {
   it('renders the provided error message', () => {
