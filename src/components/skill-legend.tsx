@@ -33,7 +33,21 @@ export function SkillLegend() {
         />
         <span>Highlighted (search)</span>
       </div>
+  
+<div className="flex items-center space-x-2 pt-1">
+  <span
+    className="
+      inline-block
+      w-2 h-2 
+      border-t-2 border-r-2 border-gray-500 
+      rotate-45
+    "
+  />
+  <span>Connect bottom handle to top handle</span>
+</div>
     </div>
+  
+
   );
 }
 
