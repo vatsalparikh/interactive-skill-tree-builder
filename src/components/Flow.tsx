@@ -40,47 +40,16 @@ export default function Flow({
   onEdgesChange,
   onConnect,
   onUnlock,
-  highlightedNodeIds,
-  highlightedEdgeIds,
 }: FlowProps) {
   const handleNodeClick: NodeMouseHandler = (_evt, node) => {
     if (node.type === 'skill') onUnlock(node.id);
   };
 
-  const viewSkills = skills.map((n) => {
-    const isHighlighted = highlightedNodeIds.has(n.id);
-    const isDimmed = highlightedNodeIds.size > 0 && !isHighlighted;
-
-    return {
-      ...n,
-      data: {
-        ...n.data,
-        isHighlighted,
-        isDimmed,
-      },
-    };
-  });
-
-  const viewPrereqs = prereqs.map((e) => {
-    const isHighlighted = highlightedEdgeIds.has(e.id);
-    const isDimming = highlightedEdgeIds.size > 0 && !isHighlighted;
-
-    return {
-      ...e,
-      style: {
-        stroke: isHighlighted ? 'rgba(37,99,235,0.9)' : 'rgba(120,120,120,0.7)',
-        strokeWidth: isHighlighted ? 3 : 1.5,
-        opacity: isDimming ? 0.25 : 1,
-      },
-      markerEnd: { type: MarkerType.ArrowClosed },
-    };
-  });
-
   return (
     <div className='h-full w-full'>
       <ReactFlow
-        nodes={viewSkills}
-        edges={viewPrereqs}
+        nodes={skills}
+        edges={prereqs}
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}

@@ -3,14 +3,14 @@
  * This software may be modified and distributed under the terms of the MIT license.
  */
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import Flow from './components/Flow';
 import SearchBar from './components/SearchBar';
 import SkillForm from './components/SkillForm';
 import { SkillLegend } from './components/SkillLegend';
-import { getHighlightedEdgeIds, getHighlightedNodeIds } from './helpers/search-utils';
+import useSkillHighlight from './hooks/useSkillHighlight';
 import { useSkillTree } from './hooks/useSkillTree';
 
 function App() {
@@ -26,13 +26,10 @@ function App() {
 
   const [query, setQuery] = useState('');
 
-  const highlightedNodeIds = useMemo(
-    () => getHighlightedNodeIds(skills, prereqs, query),
-    [skills, prereqs, query],
-  );
-  const highlightedEdgeIds = useMemo(
-    () => getHighlightedEdgeIds(prereqs, highlightedNodeIds),
-    [prereqs, highlightedNodeIds],
+  const { highlightedNodeIds, highlightedEdgeIds, viewSkills, viewPrereqs } = useSkillHighlight(
+    skills,
+    prereqs,
+    query,
   );
 
   return (
@@ -49,8 +46,8 @@ function App() {
       </div>
       <div className='w-4/5'>
         <Flow
-          skills={skills}
-          prereqs={prereqs}
+          skills={viewSkills}
+          prereqs={viewPrereqs}
           onNodesChange={handleNodesChange}
           onEdgesChange={handleEdgesChange}
           onConnect={handleConnect}
