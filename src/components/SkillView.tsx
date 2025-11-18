@@ -4,44 +4,57 @@
  */
 
 import { Handle, type NodeProps, Position } from 'reactflow';
+
 import type { SkillData } from '../types';
 
-export default function SkillView({ data }: NodeProps<SkillData>) {
-  const unlocked = data.isUnlocked;
+export default function SkillView({
+  data,
+}: NodeProps<
+  SkillData & {
+    isHighlighted?: boolean;
+    isDimmed?: boolean;
+  }
+>) {
+  const { isUnlocked, isHighlighted, isDimmed } = data;
+
+  const base = `
+    relative w-[180px] rounded-xl box-border p-3
+    border transition-shadow transition-opacity duration-150
+    bg-white
+  `;
+
+  const locked = `
+  bg-white
+  border-gray-300
+  hover:border-gray-500
+  hover:bg-white
+`;
+
+  const unlocked = `
+    border-green-400/60 bg-white
+    hover:border-green-500
+    shadow-[inset_0_0_0_2px_rgba(16,185,129,0.55)]
+  `;
+
+  const highlightStyle = isHighlighted ? { boxShadow: '0 0 10px 2px rgba(37, 99, 235, 0.8)' } : {};
 
   return (
+    <article className={[base, isUnlocked ? unlocked : locked].join(' ')} style={highlightStyle}>
+      <Handle type='source' position={Position.Bottom} />
+      <Handle type='target' position={Position.Top} />
+      <div className={isDimmed ? 'opacity-40' : 'opacity-100'}>
+        <header className='flex items-start gap-2'>
+          <h3 className='font-semibold text-sm text-gray-900 leading-tight'>{data.name}</h3>
 
+          {data.level !== undefined && (
+            <span className='ml-auto text-[10px] bg-gray-100 text-gray-700 px-2 py-[2px] rounded-md font-medium'>
+              Level {data.level}
+            </span>
+          )}
+        </header>
 
-<article
-  className={`
-    relative w-[180px] min-h-[80px] box-border rounded-xl
-    bg-white border border-gray-200 p-3 transition-shadow duration-150
-    ${unlocked ? 'shadow-[inset_0_0_0_2px_rgba(16,185,129,0.55)]' : ''}
-  `}
->
-
-      {/* Handles */}
-      <Handle type="source" position={Position.Bottom} />
-      <Handle type="target" position={Position.Top} />
-
-      {/* Name + optional level */}
-      <header className="flex items-start gap-2">
-        <h3 className="font-semibold text-sm text-gray-900 leading-tight">
-          {data.name}
-        </h3>
-
-        {data.level !== undefined && (
-<span className="ml-auto text-[10px] bg-gray-100 text-gray-700 px-2 py-[2px] rounded-md font-medium">
-  Level {data.level}
-</span>
-
-        )}
-      </header>
-
-      {/* Description */}
-      <p className="mt-1 text-xs text-gray-600 leading-snug max-h-[3.2rem] overflow-hidden">
-        {data.description}
-      </p>
+        <p className='mt-1 text-xs text-gray-600 leading-snug break-words'>{data.description}</p>
+      </div>
     </article>
   );
 }

@@ -49,20 +49,15 @@ export default function Flow({
 
   const viewSkills = skills.map((n) => {
     const isHighlighted = highlightedNodeIds.has(n.id);
-    const isDimming = highlightedNodeIds.size > 0 && !isHighlighted;
+    const isDimmed = highlightedNodeIds.size > 0 && !isHighlighted;
 
     return {
       ...n,
-      className: `
-      transition-opacity transition-shadow duration-150
-      ${
-        isHighlighted
-          ? 'opacity-100 shadow-[0_0_8px_2px_gold]'
-          : isDimming
-            ? 'opacity-25'
-            : 'opacity-100'
-      }
-    `,
+      data: {
+        ...n.data,
+        isHighlighted,
+        isDimmed,
+      },
     };
   });
 
@@ -73,7 +68,7 @@ export default function Flow({
     return {
       ...e,
       style: {
-        stroke: isHighlighted ? 'gold' : undefined,
+        stroke: isHighlighted ? 'rgba(37,99,235,0.9)' : 'rgba(120,120,120,0.7)',
         strokeWidth: isHighlighted ? 3 : 1.5,
         opacity: isDimming ? 0.25 : 1,
       },
