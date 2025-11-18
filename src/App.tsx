@@ -3,29 +3,27 @@
  * This software may be modified and distributed under the terms of the MIT license.
  */
 
-import { useEffect, useMemo, useState } from 'react';
-import { type Edge } from 'reactflow';
+import { useMemo, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 import Flow from './components/Flow';
 import SearchBar from './components/SearchBar';
 import SkillForm from './components/SkillForm';
-import { createHandlers } from './handlers/flow-handlers';
-import { loadTree, saveTree } from './helpers/local-storage';
 import { getHighlightedEdgeIds, getHighlightedNodeIds } from './helpers/search-utils';
-import type { SkillNode } from './types';
+import { useSkillTree } from './hooks/useSkillTree';
 
 function App() {
-  const savedTree = loadTree();
-  const [skills, setSkills] = useState<SkillNode[]>(savedTree?.skills ?? []);
-  const [prereqs, setPrereqs] = useState<Edge[]>(savedTree?.prereqs ?? []);
+  const {
+    skills,
+    prereqs,
+    handleAddSkill,
+    handleNodesChange,
+    handleEdgesChange,
+    handleConnect,
+    handleUnlock,
+  } = useSkillTree();
+
   const [query, setQuery] = useState('');
-
-  useEffect(() => {
-    saveTree({ skills, prereqs });
-  }, [skills, prereqs]);
-
-  const { handleAddSkill, handleNodesChange, handleEdgesChange, handleConnect, handleUnlock } =
-    createHandlers(skills, prereqs, setSkills, setPrereqs);
 
   const highlightedNodeIds = useMemo(
     () => getHighlightedNodeIds(skills, prereqs, query),
@@ -38,6 +36,7 @@ function App() {
 
   return (
     <div className='flex h-screen'>
+      <Toaster position='top-right' />
       <div className='w-1/5'>
         <SearchBar value={query} onChange={setQuery} />
         <SkillForm onSubmit={handleAddSkill} />

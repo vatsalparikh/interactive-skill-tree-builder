@@ -84,7 +84,7 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
           }}
           className={`w-full px-3 py-2 border rounded ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
         />
-        {errors.name && <p className='mt-1 text-red-600'>{errors.name}</p>}
+        <p className='min-h-[1.25rem] mt-1 text-red-600 text-sm'>{errors.name}</p>
       </div>
 
       <div>
@@ -103,7 +103,7 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
           rows={3}
           className={`w-full px-3 py-2 border rounded ${errors.description ? 'border-red-500' : 'border-gray-300'}`}
         />
-        {errors.description && <p className='mt-1 text-red-600'>{errors.description}</p>}
+        <p className='min-h-[1.25rem] mt-1 text-red-600 text-sm'>{errors.description}</p>
       </div>
 
       <div>
@@ -123,7 +123,7 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
           min='0'
           className={`w-full px-3 py-2 border rounded ${errors.level ? 'border-red-500' : 'border-gray-300'}`}
         />
-        {errors.level && <p className='mt-1 text-red-600'>{errors.level}</p>}
+        <p className='min-h-[1.25rem] mt-1 text-red-600 text-sm'>{errors.level}</p>
       </div>
 
       <button type='submit' className='w-full py-2 px-4 bg-blue-600 text-white rounded'>

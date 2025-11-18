@@ -72,15 +72,11 @@ export default function Flow({
 
     return {
       ...e,
-      className: `
-      ${
-        isHighlighted
-          ? '[&>path]:stroke-amber-500 [&>path]:stroke-[2.5]'
-          : isDimming
-            ? '[&>path]:opacity-35'
-            : ''
-      }
-    `,
+      style: {
+        stroke: isHighlighted ? 'gold' : undefined,
+        strokeWidth: isHighlighted ? 3 : 1.5,
+        opacity: isDimming ? 0.25 : 1,
+      },
       markerEnd: { type: MarkerType.ArrowClosed },
     };
   });
