@@ -13,6 +13,7 @@ import {
   type NodeChange,
 } from 'reactflow';
 
+import { showSuccessToast } from '../components/SuccessToast';
 import { createSkillNode } from '../helpers/create-node';
 import { hasCycle } from '../helpers/detect-cycle';
 import { addConnection, validateConnection } from '../helpers/edge-utils';
@@ -68,7 +69,17 @@ export function useSkillTree() {
 
   const handleUnlock = useCallback(
     (id: string) => {
+      const skill = skills.find((s) => s.id === id);
+
+      // don't unlock again
+      if (skill?.data.isUnlocked) return;
       if (!canUnlock(skills, prereqs, id)) return;
+
+      setSkills((prev) => unlockSkill(prev, id));
+
+      if (skill) {
+        showSuccessToast(`You've unlocked ${skill.data.name} 🔥`);
+      }
       setSkills((prev) => unlockSkill(prev, id));
     },
     [skills, prereqs],

@@ -37,7 +37,9 @@ function App() {
   return (
     <div className='flex h-screen'>
       <Toaster position='top-right' />
-      <div className='w-1/5'>
+      <div className='w-1/5 p-4 space-y-6 bg-white flex flex-col'>
+        <h1 className='text-2xl font-bold text-indigo-600 text-center'>Build Your Skill Tree ⚡</h1>
+
         <SearchBar value={query} onChange={setQuery} />
         <SkillForm onSubmit={handleAddSkill} />
       </div>

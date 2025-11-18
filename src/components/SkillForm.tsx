@@ -126,7 +126,10 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
         <p className='min-h-[1.25rem] mt-1 text-red-600 text-sm'>{errors.level}</p>
       </div>
 
-      <button type='submit' className='w-full py-2 px-4 bg-blue-600 text-white rounded'>
+      <button
+        type='submit'
+        className='w-full py-2 px-4 bg-blue-600 text-white rounded cursor-pointer'
+      >
         Add Skill
       </button>
     </form>
