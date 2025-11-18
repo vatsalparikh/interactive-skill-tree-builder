@@ -8,7 +8,7 @@ import { type Node } from 'reactflow';
 export interface SkillFormData {
   name: string;
   description: string;
-  level?: number; // optional, >= 0
+  level?: number; // optional, >= 0 and <= 999
 }
 
 export interface SkillData extends SkillFormData {

@@ -22,14 +22,16 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
   }
 
   function validateDescription(value: string): string {
-    return value.trim() ? '' : 'Description is required';
+    if (!value.trim()) return 'Description is required';
+    if (value.trim().length > 150) return 'Description must be 150 characters or less';
+    return '';
   }
 
   function validateLevel(value: string): string {
     if (value === '') return '';
     const number = Number(value);
-    if (!Number.isInteger(number) || number < 0) {
-      return 'Level must be a number >= 0';
+    if (!Number.isInteger(number) || number < 0 || number > 999) {
+      return 'Level must be a number >= 0 and <= 999';
     }
     return '';
   }
@@ -54,7 +56,7 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
     const data: SkillFormData = {
       name: name.trim(),
       description: description.trim(),
-      level: level ? Number(level) : undefined,
+      level: level ? Math.min(999, Math.max(0, Number(level))) : undefined,
     };
 
     onSubmit(data);
@@ -84,7 +86,7 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
           }}
           className={`w-full px-3 py-2 border rounded ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
         />
-        <p className='min-h-[1.25rem] mt-1 text-red-600 text-sm'>{errors.name}</p>
+        <p className='min-h-[1.5rem] mt-1 text-red-600 text-sm'>{errors.name}</p>
       </div>
 
       <div>
@@ -103,7 +105,10 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
           rows={3}
           className={`w-full px-3 py-2 border rounded ${errors.description ? 'border-red-500' : 'border-gray-300'}`}
         />
-        <p className='min-h-[1.25rem] mt-1 text-red-600 text-sm'>{errors.description}</p>
+        <div className='flex justify-between items-start min-h-[2.5rem] mt-1'>
+          <p className='text-red-600 text-sm'>{errors.description}</p>
+          <p className='text-gray-500 text-sm'>{description.length}/150</p>
+        </div>
       </div>
 
       <div>
@@ -121,16 +126,17 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
             setErrors((e) => ({ ...e, level: validateLevel(level) }));
           }}
           min='0'
+          max='999'
           className={`w-full px-3 py-2 border rounded ${errors.level ? 'border-red-500' : 'border-gray-300'}`}
         />
-        <p className='min-h-[1.25rem] mt-1 text-red-600 text-sm'>{errors.level}</p>
+        <p className='min-h-[2.5rem] mt-1 text-red-600 text-sm'>{errors.level}</p>
       </div>
 
       <button
         type='submit'
         className='w-full py-2 px-4 bg-blue-600 text-white rounded cursor-pointer'
       >
-        Add Skill
+        Add new skill
       </button>
     </form>
   );
