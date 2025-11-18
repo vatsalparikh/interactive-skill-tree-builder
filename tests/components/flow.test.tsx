@@ -8,8 +8,8 @@ import type { Edge } from 'reactflow';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { SkillNode } from '../../src/types';
-import Flow from '../../src/components/Flow';
-import SkillView from '../../src/components/SkillView';
+import Flow from '../../src/components/flow';
+import SkillView from '../../src/components/skill-view';
 
 // ---- Types for the ReactFlow mock ----
 

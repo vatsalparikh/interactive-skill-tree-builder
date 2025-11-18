@@ -16,7 +16,7 @@ import ReactFlow, {
 } from 'reactflow';
 
 import type { SkillNode } from '../types';
-import SkillView from './SkillView';
+import SkillView from './skill-view';
 
 const nodeTypes: NodeTypes = {
   skill: SkillView,

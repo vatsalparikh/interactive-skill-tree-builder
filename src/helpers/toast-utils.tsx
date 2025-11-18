@@ -5,7 +5,7 @@
 
 import { toast } from 'react-hot-toast';
 
-import { ErrorToast } from '../components/ErrorToast';
+import { ErrorToast } from '../components/error-toast';
 
 export function showErrorToast(message: string): void {
   toast.custom(<ErrorToast message={message} />, { duration: 2000 });

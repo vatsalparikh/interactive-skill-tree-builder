@@ -7,7 +7,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, type MockedFunction, vi } from 'vitest';
 
 import type { SkillFormData } from '../../src/types';
-import SkillForm from '../../src/components/SkillForm';
+import SkillForm from '../../src/components/skill-form';
 
 // Strongly typed mock
 let onSubmit: MockedFunction<(data: SkillFormData) => void>;

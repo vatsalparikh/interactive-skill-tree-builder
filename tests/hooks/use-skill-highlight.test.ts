@@ -8,7 +8,7 @@ import { type Edge, MarkerType } from 'reactflow';
 import { describe, expect, it } from 'vitest';
 
 import type { SkillNode } from '../../src/types';
-import useSkillHighlight from '../../src/hooks/useSkillHighlight';
+import useSkillHighlight from '../../src/hooks/use-skill-highlight';
 
 function makeSkill(id: string, name: string): SkillNode {
   return {

@@ -13,7 +13,7 @@ import {
   type NodeChange,
 } from 'reactflow';
 
-import { showSuccessToast } from '../components/SuccessToast';
+import { showSuccessToast } from '../components/success-toast';
 import { createSkillNode } from '../helpers/create-node';
 import { hasCycle } from '../helpers/detect-cycle';
 import { addConnection, validateConnection } from '../helpers/edge-utils';

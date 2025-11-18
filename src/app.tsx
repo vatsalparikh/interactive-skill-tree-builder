@@ -6,12 +6,12 @@
 import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 
-import Flow from './components/Flow';
-import SearchBar from './components/SearchBar';
-import SkillForm from './components/SkillForm';
-import { SkillLegend } from './components/SkillLegend';
-import useSkillHighlight from './hooks/useSkillHighlight';
-import { useSkillTree } from './hooks/useSkillTree';
+import Flow from './components/flow';
+import SearchBar from './components/search-bar';
+import SkillForm from './components/skill-form';
+import { SkillLegend } from './components/skill-legend';
+import useSkillHighlight from './hooks/use-skill-highlight';
+import { useSkillTree } from './hooks/use-skill-tree';
 
 function App() {
   const {

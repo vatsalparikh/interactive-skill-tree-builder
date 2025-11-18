@@ -6,7 +6,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import SearchBar from '../../src/components/SearchBar';
+import SearchBar from '../../src/components/search-bar';
 
 describe('SearchBar', () => {
   it('renders input with the provided value', () => {

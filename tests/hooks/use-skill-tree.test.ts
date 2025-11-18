@@ -34,7 +34,7 @@ vi.mock('../../src/helpers/toast-utils', () => ({
   showErrorToast: vi.fn(),
 }));
 
-vi.mock('../../src/components/SuccessToast', () => ({
+vi.mock('../../src/components/success-toast', () => ({
   showSuccessToast: vi.fn(),
 }));
 
@@ -55,7 +55,7 @@ vi.mock('reactflow', () => ({
 import { applyEdgeChanges, applyNodeChanges } from 'reactflow';
 import type { MockedFunction } from 'vitest';
 
-import { showSuccessToast } from '../../src/components/SuccessToast';
+import { showSuccessToast } from '../../src/components/success-toast';
 import { createSkillNode } from '../../src/helpers/create-node';
 import { hasCycle } from '../../src/helpers/detect-cycle';
 import { addConnection, validateConnection } from '../../src/helpers/edge-utils';
@@ -127,7 +127,7 @@ describe('useSkillTree', () => {
     };
     mockedLoadTree.mockReturnValue(saved);
 
-    const mod = await import('../../src/hooks/useSkillTree');
+    const mod = await import('../../src/hooks/use-skill-tree');
     const useSkillTree = mod.default;
 
     const { result } = renderHook(() => useSkillTree());
@@ -139,7 +139,7 @@ describe('useSkillTree', () => {
   it('initializes to empty arrays when loadTree returns null', async () => {
     mockedLoadTree.mockReturnValue(null);
 
-    const mod = await import('../../src/hooks/useSkillTree');
+    const mod = await import('../../src/hooks/use-skill-tree');
     const useSkillTree = mod.default;
 
     const { result } = renderHook(() => useSkillTree());
@@ -153,7 +153,7 @@ describe('useSkillTree', () => {
     const createdNode = makeSkillNode('created', 'Created');
     mockedCreateSkillNode.mockReturnValue(createdNode);
 
-    const mod = await import('../../src/hooks/useSkillTree');
+    const mod = await import('../../src/hooks/use-skill-tree');
     const useSkillTree = mod.default;
 
     const { result } = renderHook(() => useSkillTree());
@@ -172,7 +172,7 @@ describe('useSkillTree', () => {
 
     mockedApplyNodeChanges.mockImplementationOnce(() => [makeSkillNode('x')]);
 
-    const mod = await import('../../src/hooks/useSkillTree');
+    const mod = await import('../../src/hooks/use-skill-tree');
     const useSkillTree = mod.default;
 
     const { result } = renderHook(() => useSkillTree());
@@ -193,7 +193,7 @@ describe('useSkillTree', () => {
 
     mockedApplyEdgeChanges.mockImplementationOnce(() => [makeEdge('A', 'B')]);
 
-    const mod = await import('../../src/hooks/useSkillTree');
+    const mod = await import('../../src/hooks/use-skill-tree');
     const useSkillTree = mod.default;
 
     const { result } = renderHook(() => useSkillTree());
@@ -223,7 +223,7 @@ describe('useSkillTree', () => {
     it('does nothing when source or target missing', async () => {
       mockedLoadTree.mockReturnValue(null);
 
-      const mod = await import('../../src/hooks/useSkillTree');
+      const mod = await import('../../src/hooks/use-skill-tree');
       const useSkillTree = mod.default;
 
       const { result } = renderHook(() => useSkillTree());
@@ -245,7 +245,7 @@ describe('useSkillTree', () => {
       mockedLoadTree.mockReturnValue(null);
       mockedValidateConnection.mockReturnValue(false);
 
-      const mod = await import('../../src/hooks/useSkillTree');
+      const mod = await import('../../src/hooks/use-skill-tree');
       const useSkillTree = mod.default;
 
       const { result } = renderHook(() => useSkillTree());
@@ -265,7 +265,7 @@ describe('useSkillTree', () => {
       mockedValidateConnection.mockReturnValue(true);
       mockedHasCycle.mockReturnValue(true);
 
-      const mod = await import('../../src/hooks/useSkillTree');
+      const mod = await import('../../src/hooks/use-skill-tree');
       const useSkillTree = mod.default;
 
       const { result } = renderHook(() => useSkillTree());
@@ -286,7 +286,7 @@ describe('useSkillTree', () => {
       const newEdges = [makeEdge('A', 'B')];
       mockedAddConnection.mockReturnValue(newEdges);
 
-      const mod = await import('../../src/hooks/useSkillTree');
+      const mod = await import('../../src/hooks/use-skill-tree');
       const useSkillTree = mod.default;
 
       const { result } = renderHook(() => useSkillTree());
@@ -316,7 +316,7 @@ describe('useSkillTree', () => {
         prereqs: [],
       });
 
-      const mod = await import('../../src/hooks/useSkillTree');
+      const mod = await import('../../src/hooks/use-skill-tree');
       const useSkillTree = mod.default;
 
       const { result } = renderHook(() => useSkillTree());
@@ -337,7 +337,7 @@ describe('useSkillTree', () => {
 
       mockedCanUnlock.mockReturnValue(false);
 
-      const mod = await import('../../src/hooks/useSkillTree');
+      const mod = await import('../../src/hooks/use-skill-tree');
       const useSkillTree = mod.default;
 
       const { result } = renderHook(() => useSkillTree());
@@ -372,7 +372,7 @@ describe('useSkillTree', () => {
       ];
       mockedUnlockSkill.mockReturnValue(unlocked);
 
-      const mod = await import('../../src/hooks/useSkillTree');
+      const mod = await import('../../src/hooks/use-skill-tree');
       const useSkillTree = mod.default;
 
       const { result } = renderHook(() => useSkillTree());
