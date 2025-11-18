@@ -37,10 +37,10 @@ vi.mock('reactflow', () => {
     __esModule: true,
     default: vi.fn((props: MockReactFlowProps) => {
       passedProps = props;
-      return <div data-testid="reactflow">{props.children}</div>;
+      return <div data-testid='reactflow'>{props.children}</div>;
     }),
-    Background: () => <div data-testid="rf-background" />,
-    Controls: () => <div data-testid="rf-controls" />,
+    Background: () => <div data-testid='rf-background' />,
+    Controls: () => <div data-testid='rf-controls' />,
     MarkerType: { ArrowClosed: 'ArrowClosed' },
   };
 });
@@ -88,7 +88,7 @@ describe('Flow component', () => {
         highlightedNodeIds={new Set()}
         highlightedEdgeIds={new Set()}
         {...handlers}
-      />
+      />,
     );
 
     expect(passedProps).not.toBeNull();
@@ -119,7 +119,7 @@ describe('Flow component', () => {
         onEdgesChange={vi.fn()}
         onConnect={vi.fn()}
         onUnlock={onUnlock}
-      />
+      />,
     );
 
     expect(passedProps).not.toBeNull();
@@ -145,7 +145,7 @@ describe('Flow component', () => {
         onEdgesChange={vi.fn()}
         onConnect={vi.fn()}
         onUnlock={onUnlock}
-      />
+      />,
     );
 
     expect(passedProps).not.toBeNull();
@@ -169,7 +169,7 @@ describe('Flow component', () => {
         onEdgesChange={vi.fn()}
         onConnect={vi.fn()}
         onUnlock={vi.fn()}
-      />
+      />,
     );
 
     expect(getByTestId('rf-background')).toBeInTheDocument();

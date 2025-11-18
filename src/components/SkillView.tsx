@@ -44,7 +44,7 @@ export default function SkillView({
       <Handle type='target' position={Position.Top} />
       <div className={isDimmed ? 'opacity-40' : 'opacity-100'}>
         <header className='flex items-start gap-2'>
-          <h3 className='font-semibold text-sm text-gray-900 leading-tight'>{data.name}</h3>
+          <p className='font-semibold text-sm text-gray-900 leading-tight break-words whitespace-normal overflow-hidden max-w-full'>{data.name}</p>
 
           {data.level !== undefined && (
             <span className='ml-auto text-[10px] bg-gray-100 text-gray-700 px-2 py-[2px] rounded-md font-medium'>

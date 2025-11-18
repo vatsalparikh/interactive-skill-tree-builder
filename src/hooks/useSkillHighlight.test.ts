@@ -72,20 +72,18 @@ describe('useSkillHighlight', () => {
 
     const viewSkills = result.current.viewSkills;
 
-const skillA = viewSkills.find((s) => s.id === 'A');
-const skillB = viewSkills.find((s) => s.id === 'B');
-const skillC = viewSkills.find((s) => s.id === 'C');
+    const skillA = viewSkills.find((s) => s.id === 'A');
+    const skillB = viewSkills.find((s) => s.id === 'B');
+    const skillC = viewSkills.find((s) => s.id === 'C');
 
-expect(skillA).toBeDefined();
-if (!skillA) throw new Error('skillA missing');
+    expect(skillA).toBeDefined();
+    if (!skillA) throw new Error('skillA missing');
 
-expect(skillB).toBeDefined();
-if (!skillB) throw new Error('skillB missing');
+    expect(skillB).toBeDefined();
+    if (!skillB) throw new Error('skillB missing');
 
-expect(skillC).toBeDefined();
-if (!skillC) throw new Error('skillC missing');
-
-
+    expect(skillC).toBeDefined();
+    if (!skillC) throw new Error('skillC missing');
 
     const dataA = skillA.data as HighlightedSkillData;
     const dataB = skillB.data as HighlightedSkillData;
@@ -100,10 +98,9 @@ if (!skillC) throw new Error('skillC missing');
     const { result } = renderHook(() => useSkillHighlight(skills, edges, 'flame'));
 
     const viewEdges = result.current.viewPrereqs;
-const edgeAC = viewEdges.find((e) => e.id === 'A->C');
-expect(edgeAC).toBeDefined();
-if (!edgeAC) throw new Error('edge A->C missing');
-
+    const edgeAC = viewEdges.find((e) => e.id === 'A->C');
+    expect(edgeAC).toBeDefined();
+    if (!edgeAC) throw new Error('edge A->C missing');
 
     expect(edgeAC.style?.stroke).toBe('rgba(37,99,235,0.9)');
     expect(edgeAC.style?.strokeWidth).toBe(3);
@@ -117,12 +114,11 @@ if (!edgeAC) throw new Error('edge A->C missing');
     const { result } = renderHook(() => useSkillHighlight(skills, edges2, 'flame'));
 
     const prereqs = result.current.viewPrereqs;
-const edgeAC = prereqs.find((e) => e.id === 'A->C');
-if (!edgeAC) throw new Error('Edge A->C missing');
+    const edgeAC = prereqs.find((e) => e.id === 'A->C');
+    if (!edgeAC) throw new Error('Edge A->C missing');
 
-const edgeBC = prereqs.find((e) => e.id === 'B->C');
-if (!edgeBC) throw new Error('Edge B->C missing');
-
+    const edgeBC = prereqs.find((e) => e.id === 'B->C');
+    if (!edgeBC) throw new Error('Edge B->C missing');
 
     // Both edges highlighted, no dimming
     expect(edgeAC.style?.opacity).toBe(1);
@@ -160,12 +156,11 @@ if (!edgeBC) throw new Error('Edge B->C missing');
 
     const viewEdges = result.current.viewPrereqs;
 
-   const edgeAC = viewEdges.find((e) => e.id === 'A->C');
-if (!edgeAC) throw new Error('Edge A->C missing');
+    const edgeAC = viewEdges.find((e) => e.id === 'A->C');
+    if (!edgeAC) throw new Error('Edge A->C missing');
 
-const edgeAB = viewEdges.find((e) => e.id === 'A->B');
-if (!edgeAB) throw new Error('Edge A->B missing');
-
+    const edgeAB = viewEdges.find((e) => e.id === 'A->B');
+    if (!edgeAB) throw new Error('Edge A->B missing');
 
     // A->C highlighted
     expect(edgeAC.style?.opacity).toBe(1);

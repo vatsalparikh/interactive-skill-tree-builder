@@ -4,7 +4,7 @@
  */
 
 import { fireEvent, render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, type MockedFunction,vi } from 'vitest';
+import { beforeEach, describe, expect, it, type MockedFunction, vi } from 'vitest';
 
 import type { SkillFormData } from '../types';
 import SkillForm from './SkillForm';
@@ -72,9 +72,7 @@ describe('SkillForm', () => {
     fillDescription('x'.repeat(151));
     fireEvent.blur(screen.getByLabelText('Description *'));
 
-    expect(
-      screen.getByText('Description must be 150 characters or less'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('Description must be 150 characters or less')).toBeInTheDocument();
   });
 
   it('shows error when level is invalid', () => {
@@ -83,9 +81,7 @@ describe('SkillForm', () => {
     fillLevel('2000');
     fireEvent.blur(screen.getByLabelText('Level (optional)'));
 
-    expect(
-      screen.getByText('Level must be a number >= 0 and <= 999'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('Level must be a number >= 0 and <= 999')).toBeInTheDocument();
   });
 
   it('submits valid form with trimmed values', () => {
@@ -99,11 +95,10 @@ describe('SkillForm', () => {
 
     expect(onSubmit).toHaveBeenCalledTimes(1);
 
-expect(onSubmit.mock.calls.length).toBeGreaterThan(0);
+    expect(onSubmit.mock.calls.length).toBeGreaterThan(0);
 
-const call = onSubmit.mock.calls[0] as [SkillFormData];
-const submitted = call[0];
-
+    const call = onSubmit.mock.calls[0] as [SkillFormData];
+    const submitted = call[0];
 
     expect(submitted).toEqual({
       name: 'Fireball',
@@ -121,10 +116,9 @@ const submitted = call[0];
 
     submitForm();
 
-expect(onSubmit.mock.calls.length).toBeGreaterThan(0);
+    expect(onSubmit.mock.calls.length).toBeGreaterThan(0);
 
-const [submitted] = onSubmit.mock.calls[0] as [SkillFormData];
-
+    const [submitted] = onSubmit.mock.calls[0] as [SkillFormData];
 
     expect(submitted.level).toBeUndefined();
   });

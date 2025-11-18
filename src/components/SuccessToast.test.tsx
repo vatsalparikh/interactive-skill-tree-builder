@@ -6,14 +6,7 @@
 import type { ReactElement } from 'react';
 import React from 'react';
 import { toast } from 'react-hot-toast';
-import {
-  beforeEach,
-  describe,
-  expect,
-  it,
-  type MockedFunction,
-  vi,
-} from 'vitest';
+import { beforeEach, describe, expect, it, type MockedFunction, vi } from 'vitest';
 
 import { showSuccessToast } from './SuccessToast';
 
@@ -51,10 +44,9 @@ describe('showSuccessToast', () => {
 
     expect(mockedToastCustom).toHaveBeenCalledTimes(1);
 
-expect(mockedToastCustom.mock.calls.length).toBeGreaterThan(0);
+    expect(mockedToastCustom.mock.calls.length).toBeGreaterThan(0);
 
-const call = mockedToastCustom.mock.calls[0];
-
+    const call = mockedToastCustom.mock.calls[0];
 
     const jsxElement = call[0];
     const options = call[1];
@@ -81,10 +73,9 @@ const call = mockedToastCustom.mock.calls[0];
 
     const mockedToastCustom = toast.custom as MockedFunction<ToastCustomFn>;
 
-expect(mockedToastCustom.mock.calls.length).toBeGreaterThan(0);
+    expect(mockedToastCustom.mock.calls.length).toBeGreaterThan(0);
 
-const call = mockedToastCustom.mock.calls[0];
-
+    const call = mockedToastCustom.mock.calls[0];
 
     const jsxElement = call[0];
 

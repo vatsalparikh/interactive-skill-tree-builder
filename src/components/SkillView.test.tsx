@@ -19,11 +19,7 @@ vi.mock('reactflow', () => {
 
   return {
     Handle: ({ type, position }: MockHandleProps) => (
-      <div
-        data-testid={`handle-${type}`}
-        data-handle-type={type}
-        data-position={position}
-      />
+      <div data-testid={`handle-${type}`} data-handle-type={type} data-position={position} />
     ),
     Position: {
       Bottom: 'bottom',
@@ -31,8 +27,6 @@ vi.mock('reactflow', () => {
     },
   };
 });
-
-
 
 // Import the component under test after mocking reactflow.
 import SkillView from './SkillView';

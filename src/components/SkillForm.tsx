@@ -19,6 +19,7 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
 
   function validateName(value: string): string {
     return value.trim() ? '' : 'Name is required';
+    if (value.trim().length > 50) return 'Name must be 50 characters or less';
   }
 
   function validateDescription(value: string): string {
@@ -77,6 +78,7 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
         <input
           id='name'
           type='text'
+          maxLength={50}
           value={name}
           onChange={(e) => {
             setName(e.target.value);
@@ -86,7 +88,10 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
           }}
           className={`w-full px-3 py-2 border rounded ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
         />
-        <p className='min-h-[1.5rem] mt-1 text-red-600 text-sm'>{errors.name}</p>
+        <div className='flex justify-between items-start min-h-[1.5rem] mt-1'>
+          <p className='text-red-600 text-sm'>{errors.name}</p>
+          <p className='text-gray-500 text-sm'>{name.length}/50</p>
+        </div>
       </div>
 
       <div>

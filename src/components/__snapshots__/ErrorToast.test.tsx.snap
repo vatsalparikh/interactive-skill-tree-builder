@@ -1,9 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`ErrorToast > matches snapshot 1`] = `
-<div
-  class="bg-red-100 text-red-900 px-4 py-3 rounded-md shadow text-sm"
->
-  Snapshot test
-</div>
-`;

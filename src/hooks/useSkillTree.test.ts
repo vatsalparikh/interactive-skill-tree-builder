@@ -79,7 +79,6 @@ const mockedUnlockSkill = unlockSkill as MockedFunction<typeof unlockSkill>;
 const mockedApplyNodeChanges = applyNodeChanges as MockedFunction<typeof applyNodeChanges>;
 const mockedApplyEdgeChanges = applyEdgeChanges as MockedFunction<typeof applyEdgeChanges>;
 
-
 /* ---------------------------------------------------------
  * Test helpers
  * -------------------------------------------------------- */
@@ -164,17 +163,14 @@ describe('useSkillTree', () => {
     });
 
     expect(mockedSaveTree).toHaveBeenCalled();
-const lastCall = mockedSaveTree.mock.calls.at(-1);
-expect(lastCall).toBeTruthy(); // or toBeDefined()
-
+    const lastCall = mockedSaveTree.mock.calls.at(-1);
+    expect(lastCall).toBeTruthy(); // or toBeDefined()
   });
 
   it('handleNodesChange applies node changes', async () => {
     mockedLoadTree.mockReturnValue(null);
 
-    mockedApplyNodeChanges.mockImplementationOnce(() => [
-      makeSkillNode('x'),
-    ]);
+    mockedApplyNodeChanges.mockImplementationOnce(() => [makeSkillNode('x')]);
 
     const mod = await import('./useSkillTree');
     const useSkillTree = mod.default;
@@ -195,9 +191,7 @@ expect(lastCall).toBeTruthy(); // or toBeDefined()
   it('handleEdgesChange applies edge changes', async () => {
     mockedLoadTree.mockReturnValue(null);
 
-    mockedApplyEdgeChanges.mockImplementationOnce(() => [
-      makeEdge('A', 'B'),
-    ]);
+    mockedApplyEdgeChanges.mockImplementationOnce(() => [makeEdge('A', 'B')]);
 
     const mod = await import('./useSkillTree');
     const useSkillTree = mod.default;
@@ -262,7 +256,7 @@ expect(lastCall).toBeTruthy(); // or toBeDefined()
 
       expect(mockedValidateConnection).toHaveBeenCalledWith([], connection);
       expect(mockedShowErrorToast).toHaveBeenCalledWith(
-        'Invalid connection (self-loop or duplicate)'
+        'Invalid connection (self-loop or duplicate)',
       );
     });
 
@@ -281,9 +275,7 @@ expect(lastCall).toBeTruthy(); // or toBeDefined()
       });
 
       expect(mockedHasCycle).toHaveBeenCalled();
-      expect(mockedShowErrorToast).toHaveBeenCalledWith(
-        'Cannot create circular prerequisites'
-      );
+      expect(mockedShowErrorToast).toHaveBeenCalledWith('Cannot create circular prerequisites');
     });
 
     it('adds connection when valid and not cyclic', async () => {
@@ -357,7 +349,7 @@ expect(lastCall).toBeTruthy(); // or toBeDefined()
       expect(mockedCanUnlock).toHaveBeenCalledWith(
         result.current.skills,
         result.current.prereqs,
-        'A'
+        'A',
       );
       expect(mockedShowSuccessToast).not.toHaveBeenCalled();
     });
@@ -391,9 +383,7 @@ expect(lastCall).toBeTruthy(); // or toBeDefined()
 
       expect(mockedUnlockSkill).toHaveBeenCalledWith(initial.skills, 'A');
       expect(result.current.skills).toEqual(unlocked);
-      expect(mockedShowSuccessToast).toHaveBeenCalledWith(
-        'You\'ve unlocked A 🔥'
-      );
+      expect(mockedShowSuccessToast).toHaveBeenCalledWith("You've unlocked A 🔥");
       expect(mockedSaveTree).toHaveBeenCalled();
     });
   });
