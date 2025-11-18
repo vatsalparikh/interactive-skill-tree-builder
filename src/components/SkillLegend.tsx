@@ -1,0 +1,36 @@
+/*
+ * Copyright (c) 2025
+ * This software may be modified and distributed under the terms of the MIT license.
+ */
+
+export function SkillLegend() {
+  return (
+    <div className='pl-1 text-xs text-gray-600 space-y-2'>
+      <div className='flex items-center space-x-2'>
+        <span className='w-3 h-3 rounded-sm bg-white border border-gray-300' />
+        <span>Locked</span>
+      </div>
+
+      <div className='flex items-center space-x-2'>
+        <span
+          className='
+            w-3 h-3 rounded-sm bg-white 
+            border border-green-400/60
+            shadow-[inset_0_0_0_2px_rgba(16,185,129,0.55)]
+          '
+        />
+        <span>Unlocked</span>
+      </div>
+
+      <div className='flex items-center space-x-2'>
+        <span
+          className='
+            w-3 h-3 rounded-sm bg-white
+            shadow-[0_0_6px_2px_rgba(37,99,235,0.8)]
+          '
+        />
+        <span>Highlighted (search)</span>
+      </div>
+    </div>
+  );
+}

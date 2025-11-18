@@ -69,7 +69,7 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='p-4 space-y-4'>
+    <form onSubmit={handleSubmit} className='space-y-4'>
       <div>
         <label htmlFor='name' className='block'>
           Name *

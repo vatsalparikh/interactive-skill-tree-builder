@@ -10,7 +10,7 @@ interface SearchBarProps {
 
 export default function SearchBar({ value, onChange }: SearchBarProps) {
   return (
-    <div className='flex justify-center py-3'>
+    <div className='py-3'>
       <label htmlFor='search' className='sr-only'>
         Search skills by name
       </label>
@@ -24,7 +24,7 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
         }}
         placeholder='Search skills by name'
         className='
-            w-full max-w-[240px] mx-auto
+            w-full
             pl-5 pr-4 py-2
             bg-white
             border border-gray-300

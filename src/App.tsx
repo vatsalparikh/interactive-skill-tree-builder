@@ -9,6 +9,7 @@ import { Toaster } from 'react-hot-toast';
 import Flow from './components/Flow';
 import SearchBar from './components/SearchBar';
 import SkillForm from './components/SkillForm';
+import { SkillLegend } from './components/SkillLegend';
 import { getHighlightedEdgeIds, getHighlightedNodeIds } from './helpers/search-utils';
 import { useSkillTree } from './hooks/useSkillTree';
 
@@ -42,6 +43,9 @@ function App() {
 
         <SearchBar value={query} onChange={setQuery} />
         <SkillForm onSubmit={handleAddSkill} />
+        <div className='mt-auto pt-4'>
+          <SkillLegend />
+        </div>
       </div>
       <div className='w-4/5'>
         <Flow
