@@ -12,7 +12,7 @@ import reactDom from 'eslint-plugin-react-dom';
 import licenseHeader from 'eslint-plugin-license-header';
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'tests/**', '**/__snapshots__/**']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
