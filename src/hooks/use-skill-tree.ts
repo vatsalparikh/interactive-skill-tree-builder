@@ -90,6 +90,8 @@ export function useSkillTree() {
     (id: string) => {
       const skill = skills.find((s) => s.id === id);
 
+      if (!skill) return;
+
       // don't unlock again
       if (skill?.data.isUnlocked) return;
       if (!canUnlock(skills, prereqs, id)) return;

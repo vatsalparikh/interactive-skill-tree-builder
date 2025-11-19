@@ -299,6 +299,149 @@ describe('useSkillTree', () => {
       expect(result.current.prereqs).toEqual(newEdges);
       expect(mockedSaveTree).toHaveBeenCalled();
     });
+
+      it('blocks connecting locked to unlocked and shows correct error', async () => {
+      mockedLoadTree.mockReturnValue({
+        skills: [
+          { ...makeSkillNode('A'), data: { ...makeSkillNode('A').data, isUnlocked: false } },
+          { ...makeSkillNode('B'), data: { ...makeSkillNode('B').data, isUnlocked: true } },
+        ],
+        prereqs: [],
+      });
+
+      mockedValidateConnection.mockReturnValue(true);
+      mockedHasCycle.mockReturnValue(false);
+
+      const mod = await import('../../src/hooks/use-skill-tree');
+      const useSkillTree = mod.default;
+
+      const { result } = renderHook(() => useSkillTree());
+
+      act(() => {
+        result.current.handleConnect({
+          source: 'A',
+          target: 'B',
+          sourceHandle: null,
+          targetHandle: null,
+        });
+      });
+
+      expect(mockedShowErrorToast).toHaveBeenCalledWith(
+        'Cannot add locked skill as a prerequisite of an unlocked skill',
+      );
+      expect(mockedValidateConnection).not.toHaveBeenCalled();
+      expect(mockedHasCycle).not.toHaveBeenCalled();
+      expect(result.current.prereqs).toEqual([]);
+    });
+
+    it('allows unlocked to unlocked connection and adds edge', async () => {
+      mockedLoadTree.mockReturnValue({
+        skills: [
+          { ...makeSkillNode('A'), data: { ...makeSkillNode('A').data, isUnlocked: true } },
+          { ...makeSkillNode('B'), data: { ...makeSkillNode('B').data, isUnlocked: true } },
+        ],
+        prereqs: [],
+      });
+
+      mockedValidateConnection.mockReturnValue(true);
+      mockedHasCycle.mockReturnValue(false);
+      mockedAddConnection.mockReturnValue([makeEdge('A', 'B')]);
+
+      const mod = await import('../../src/hooks/use-skill-tree');
+      const useSkillTree = mod.default;
+
+      const { result } = renderHook(() => useSkillTree());
+
+      act(() => {
+        result.current.handleConnect({
+          source: 'A',
+          target: 'B',
+          sourceHandle: null,
+          targetHandle: null,
+        });
+      });
+
+      expect(mockedValidateConnection).toHaveBeenCalledWith([], {
+        source: 'A',
+        target: 'B',
+        sourceHandle: null,
+        targetHandle: null,
+      });
+
+      expect(mockedAddConnection).toHaveBeenCalledWith([], {
+        source: 'A',
+        target: 'B',
+        sourceHandle: null,
+        targetHandle: null,
+      });
+
+      expect(result.current.prereqs).toEqual([makeEdge('A', 'B')]);
+    });
+
+    it('allows unlocked to locked connection and adds edge', async () => {
+      mockedLoadTree.mockReturnValue({
+        skills: [
+          { ...makeSkillNode('A'), data: { ...makeSkillNode('A').data, isUnlocked: true } },
+          { ...makeSkillNode('B'), data: { ...makeSkillNode('B').data, isUnlocked: false } },
+        ],
+        prereqs: [],
+      });
+
+      mockedValidateConnection.mockReturnValue(true);
+      mockedHasCycle.mockReturnValue(false);
+      mockedAddConnection.mockReturnValue([makeEdge('A', 'B')]);
+
+      const mod = await import('../../src/hooks/use-skill-tree');
+      const useSkillTree = mod.default;
+
+      const { result } = renderHook(() => useSkillTree());
+
+      act(() => {
+        result.current.handleConnect({
+          source: 'A',
+          target: 'B',
+          sourceHandle: null,
+          targetHandle: null,
+        });
+      });
+
+      expect(mockedValidateConnection).toHaveBeenCalled();
+      expect(mockedHasCycle).toHaveBeenCalled();
+      expect(result.current.prereqs).toEqual([makeEdge('A', 'B')]);
+    });
+
+    it('allows locked to locked connection (if valid and no cycle)', async () => {
+      mockedLoadTree.mockReturnValue({
+        skills: [
+          makeSkillNode('A'),
+          makeSkillNode('B'),
+        ],
+        prereqs: [],
+      });
+
+      mockedValidateConnection.mockReturnValue(true);
+      mockedHasCycle.mockReturnValue(false);
+      mockedAddConnection.mockReturnValue([makeEdge('A', 'B')]);
+
+      const mod = await import('../../src/hooks/use-skill-tree');
+      const useSkillTree = mod.default;
+
+      const { result } = renderHook(() => useSkillTree());
+
+      act(() => {
+        result.current.handleConnect({
+          source: 'A',
+          target: 'B',
+          sourceHandle: null,
+          targetHandle: null,
+        });
+      });
+
+      expect(mockedValidateConnection).toHaveBeenCalled();
+      expect(mockedHasCycle).toHaveBeenCalled();
+      expect(result.current.prereqs).toEqual([makeEdge('A', 'B')]);
+    });
+
   });
 
   /* ---------------------------------------------------------
@@ -387,4 +530,37 @@ describe('useSkillTree', () => {
       expect(mockedSaveTree).toHaveBeenCalled();
     });
   });
+
+      it('does nothing and does NOT show toast when skill is not found', async () => {
+      mockedLoadTree.mockReturnValue({
+        skills: [makeSkillNode('A')], // only A exists
+        prereqs: [],
+      });
+
+      // canUnlock should NOT matter—skill doesn't exist
+      mockedCanUnlock.mockReturnValue(true);
+
+      const mod = await import('../../src/hooks/use-skill-tree');
+      const useSkillTree = mod.default;
+
+      const { result } = renderHook(() => useSkillTree());
+
+      act(() => {
+        // Unlocking ID "Z" which doesn't exist
+        result.current.handleUnlock('Z');
+      });
+
+      // Should NOT call unlockSkill — nothing to unlock
+      expect(mockedUnlockSkill).not.toHaveBeenCalled();
+
+      // Should NOT show toast
+      expect(mockedShowSuccessToast).not.toHaveBeenCalled();
+
+      // State should remain unchanged
+      expect(result.current.skills).toEqual([makeSkillNode('A')]);
+
+      // saveTree *should* still run (effect triggered by unchanged state)
+      expect(mockedSaveTree).toHaveBeenCalled();
+    });
+
 });
