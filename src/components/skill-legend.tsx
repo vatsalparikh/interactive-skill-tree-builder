@@ -8,7 +8,7 @@ export function SkillLegend() {
     <div className='pl-1 text-xs text-gray-600 space-y-2' role='list'>
       <div className='flex items-center space-x-2' role='listitem'>
         <span role='presentation' className='w-3 h-3 rounded-sm bg-white border border-gray-300' />
-        <span>Locked</span>
+        <span>Locked (click a skill to unlock)</span>
       </div>
 
       <div className='flex items-center space-x-2' role='listitem'>

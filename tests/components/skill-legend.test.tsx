@@ -12,7 +12,7 @@ describe('SkillLegend', () => {
   it('renders all legend items', () => {
     render(<SkillLegend />);
 
-    expect(screen.getByText('Locked')).toBeInTheDocument();
+    expect(screen.getByText('Locked (click a skill to unlock)')).toBeInTheDocument();
     expect(screen.getByText('Unlocked')).toBeInTheDocument();
     expect(screen.getByText('Highlighted (search)')).toBeInTheDocument();
   });
@@ -21,7 +21,7 @@ describe('SkillLegend', () => {
     render(<SkillLegend />);
 
     const labels = [
-      screen.getByText('Locked'),
+      screen.getByText('Locked (click a skill to unlock)'),
       screen.getByText('Unlocked'),
       screen.getByText('Highlighted (search)'),
     ];

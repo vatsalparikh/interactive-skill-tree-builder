@@ -16,10 +16,9 @@ export function ResetButton({ onReset }: { onReset: () => void }) {
       type='button'
       aria-label='Reset skill tree and clear all saved progress'
       onClick={handleClick}
-      className="w-full px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded 
+      className='w-full px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded 
            hover:bg-gray-100 transition focus:outline-none focus:ring-2 focus:ring-gray-300 
-           cursor-pointer"
-
+           cursor-pointer'
     >
       Reset tree
     </button>
