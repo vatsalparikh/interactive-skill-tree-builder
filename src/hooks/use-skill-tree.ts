@@ -53,25 +53,37 @@ export function useSkillTree() {
 
   const handleConnect = useCallback(
     (connection: Connection) => {
-      const { source, target } = connection;
+      setPrereqs((prev) => {
+        const { source, target } = connection;
 
-      if (!source || !target) {
-        return;
-      }
+        if (!source || !target) return prev;
 
-      if (!validateConnection(prereqs, connection)) {
-        showErrorToast('Invalid connection (self-loop or duplicate)');
-        return;
-      }
+        // Always use fresh prereqs from prev
+        const currentEdges = prev;
 
-      if (hasCycle(prereqs, source, target)) {
-        showErrorToast('Cannot create circular prerequisites');
-        return;
-      }
+        const sourceSkill = skills.find((skill) => skill.id === source);
+        const targetSkill = skills.find((skill) => skill.id === target);
 
-      setPrereqs((prev) => addConnection(prev, connection));
+        // blocks connecting a locked skill to an already unlocked skill
+        if (!sourceSkill?.data.isUnlocked && targetSkill?.data.isUnlocked) {
+          showErrorToast('Cannot add locked skill as a prerequisite of an unlocked skill');
+          return prev;
+        }
+
+        if (!validateConnection(currentEdges, connection)) {
+          showErrorToast('Invalid connection (self-loop or duplicate)');
+          return prev;
+        }
+
+        if (hasCycle(currentEdges, source, target)) {
+          showErrorToast('Cannot create circular prerequisites');
+          return prev;
+        }
+
+        return addConnection(currentEdges, connection);
+      });
     },
-    [prereqs],
+    [skills],
   );
 
   const handleUnlock = useCallback(
