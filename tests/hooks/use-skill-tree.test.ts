@@ -300,7 +300,7 @@ describe('useSkillTree', () => {
       expect(mockedSaveTree).toHaveBeenCalled();
     });
 
-      it('blocks connecting locked to unlocked and shows correct error', async () => {
+    it('blocks connecting locked to unlocked and shows correct error', async () => {
       mockedLoadTree.mockReturnValue({
         skills: [
           { ...makeSkillNode('A'), data: { ...makeSkillNode('A').data, isUnlocked: false } },
@@ -412,10 +412,7 @@ describe('useSkillTree', () => {
 
     it('allows locked to locked connection (if valid and no cycle)', async () => {
       mockedLoadTree.mockReturnValue({
-        skills: [
-          makeSkillNode('A'),
-          makeSkillNode('B'),
-        ],
+        skills: [makeSkillNode('A'), makeSkillNode('B')],
         prereqs: [],
       });
 
@@ -441,7 +438,6 @@ describe('useSkillTree', () => {
       expect(mockedHasCycle).toHaveBeenCalled();
       expect(result.current.prereqs).toEqual([makeEdge('A', 'B')]);
     });
-
   });
 
   /* ---------------------------------------------------------
@@ -531,36 +527,35 @@ describe('useSkillTree', () => {
     });
   });
 
-      it('does nothing and does NOT show toast when skill is not found', async () => {
-      mockedLoadTree.mockReturnValue({
-        skills: [makeSkillNode('A')], // only A exists
-        prereqs: [],
-      });
-
-      // canUnlock should NOT matter—skill doesn't exist
-      mockedCanUnlock.mockReturnValue(true);
-
-      const mod = await import('../../src/hooks/use-skill-tree');
-      const useSkillTree = mod.default;
-
-      const { result } = renderHook(() => useSkillTree());
-
-      act(() => {
-        // Unlocking ID "Z" which doesn't exist
-        result.current.handleUnlock('Z');
-      });
-
-      // Should NOT call unlockSkill — nothing to unlock
-      expect(mockedUnlockSkill).not.toHaveBeenCalled();
-
-      // Should NOT show toast
-      expect(mockedShowSuccessToast).not.toHaveBeenCalled();
-
-      // State should remain unchanged
-      expect(result.current.skills).toEqual([makeSkillNode('A')]);
-
-      // saveTree *should* still run (effect triggered by unchanged state)
-      expect(mockedSaveTree).toHaveBeenCalled();
+  it('does nothing and does NOT show toast when skill is not found', async () => {
+    mockedLoadTree.mockReturnValue({
+      skills: [makeSkillNode('A')], // only A exists
+      prereqs: [],
     });
 
+    // canUnlock should NOT matter—skill doesn't exist
+    mockedCanUnlock.mockReturnValue(true);
+
+    const mod = await import('../../src/hooks/use-skill-tree');
+    const useSkillTree = mod.default;
+
+    const { result } = renderHook(() => useSkillTree());
+
+    act(() => {
+      // Unlocking ID "Z" which doesn't exist
+      result.current.handleUnlock('Z');
+    });
+
+    // Should NOT call unlockSkill — nothing to unlock
+    expect(mockedUnlockSkill).not.toHaveBeenCalled();
+
+    // Should NOT show toast
+    expect(mockedShowSuccessToast).not.toHaveBeenCalled();
+
+    // State should remain unchanged
+    expect(result.current.skills).toEqual([makeSkillNode('A')]);
+
+    // saveTree *should* still run (effect triggered by unchanged state)
+    expect(mockedSaveTree).toHaveBeenCalled();
+  });
 });

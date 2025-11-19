@@ -75,25 +75,25 @@ export default function Flow({
       {/* Screen-reader-friendly fallback: textual list of skills and prereqs */}
       <div role='region' aria-label='Skill list' className='sr-only'>
         <ul>
-          {skills.map((s) => {
-            const incoming = prereqs.filter((e) => e.target === s.id);
+          {skills.map((skill) => {
+            const incoming = prereqs.filter((prereq) => prereq.target === skill.id);
 
             const prereqNames = incoming
-              .map((e) => skills.find((n) => n.id === e.source)?.data.name)
+              .map((prereq) => skills.find((skill) => skill.id === prereq.source)?.data.name)
               .filter(Boolean);
 
             return (
-              <li key={s.id}>
-                {s.data.name}
+              <li key={skill.id}>
+                {skill.data.name}
 
-                {s.data.level !== undefined && (
+                {skill.data.level !== undefined && (
                   <>
                     {' — Level '}
-                    {s.data.level}
+                    {skill.data.level}
                   </>
                 )}
 
-                {s.data.isUnlocked ? ' (unlocked)' : ' (locked)'}
+                {skill.data.isUnlocked ? ' (unlocked)' : ' (locked)'}
 
                 {prereqNames.length > 0 && <> — Prerequisites: {prereqNames.join(', ')}</>}
               </li>

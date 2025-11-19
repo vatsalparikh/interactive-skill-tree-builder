@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import Flow from './components/flow';
+import { ResetButton } from './components/reset-tree';
 import SearchBar from './components/search-bar';
 import SkillForm from './components/skill-form';
 import { SkillLegend } from './components/skill-legend';
@@ -14,6 +15,8 @@ import useSkillHighlight from './hooks/use-skill-highlight';
 import { useSkillTree } from './hooks/use-skill-tree';
 
 function App() {
+  const [query, setQuery] = useState('');
+
   const {
     skills,
     prereqs,
@@ -22,9 +25,8 @@ function App() {
     handleEdgesChange,
     handleConnect,
     handleUnlock,
+    resetState,
   } = useSkillTree();
-
-  const [query, setQuery] = useState('');
 
   const { highlightedNodeIds, highlightedEdgeIds, viewSkills, viewPrereqs } = useSkillHighlight(
     skills,
@@ -40,6 +42,7 @@ function App() {
 
         <SearchBar value={query} onChange={setQuery} />
         <SkillForm onSubmit={handleAddSkill} />
+        <ResetButton onReset={resetState} />
         <div className='mt-auto pt-4'>
           <SkillLegend />
         </div>

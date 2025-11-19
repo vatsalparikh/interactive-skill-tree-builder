@@ -64,8 +64,8 @@ describe('unlockSkill', () => {
     const nodes = [makeSkill('A', false), makeSkill('B', false)];
 
     const result = unlockSkill(nodes, 'A');
-    const nodeA = result.find((n) => n.id === 'A');
-    const nodeB = result.find((n) => n.id === 'B');
+    const nodeA = result.find((node) => node.id === 'A');
+    const nodeB = result.find((node) => node.id === 'B');
 
     expect(nodeA?.data.isUnlocked).toBe(true);
     expect(nodeB?.data.isUnlocked).toBe(false);

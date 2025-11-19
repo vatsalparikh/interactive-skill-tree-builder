@@ -116,3 +116,11 @@ export function saveTree(data: SkillTree): void {
     console.error('[saveTree] Failed to save skill tree', err);
   }
 }
+
+export function resetTree(): void {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('[resetTree] Failed to reset skill tree', err);
+  }
+}

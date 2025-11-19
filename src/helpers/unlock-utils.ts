@@ -12,7 +12,7 @@ export function canUnlock(nodes: SkillNode[], edges: Edge[], skillId: string): b
   if (prereqs.length === 0) return true;
 
   return prereqs.every((id) => {
-    const node = nodes.find((n) => n.id === id);
+    const node = nodes.find((node) => node.id === id);
     return node?.data.isUnlocked === true;
   });
 }

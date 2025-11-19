@@ -23,13 +23,13 @@ export function useSkillHighlight(skills: SkillNode[], prereqs: Edge[], query: s
 
   const viewSkills: SkillNode[] = useMemo(() => {
     const hasHighlights = highlightedNodeIds.size > 0;
-    return skills.map((n) => {
-      const isHighlighted = highlightedNodeIds.has(n.id);
+    return skills.map((skill) => {
+      const isHighlighted = highlightedNodeIds.has(skill.id);
       const isDimmed = hasHighlights && !isHighlighted;
       return {
-        ...n,
+        ...skill,
         data: {
-          ...n.data,
+          ...skill.data,
           isHighlighted,
           isDimmed,
         },

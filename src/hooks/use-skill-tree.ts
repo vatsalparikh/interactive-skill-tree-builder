@@ -17,7 +17,7 @@ import { showSuccessToast } from '../components/success-toast';
 import { createSkillNode } from '../helpers/create-node';
 import { hasCycle } from '../helpers/detect-cycle';
 import { addConnection, validateConnection } from '../helpers/edge-utils';
-import { loadTree, saveTree } from '../helpers/local-storage';
+import { loadTree, resetTree, saveTree } from '../helpers/local-storage';
 import { sanitizeText } from '../helpers/sanitize-input';
 import { showErrorToast } from '../helpers/toast-utils';
 import { canUnlock, unlockSkill } from '../helpers/unlock-utils';
@@ -88,22 +88,28 @@ export function useSkillTree() {
 
   const handleUnlock = useCallback(
     (id: string) => {
-      const skill = skills.find((s) => s.id === id);
+      const skill = skills.find((skill) => skill.id === id);
 
       if (!skill) return;
 
       // don't unlock again
-      if (skill?.data.isUnlocked) return;
+      if (skill.data.isUnlocked) return;
       if (!canUnlock(skills, prereqs, id)) return;
 
       setSkills((prev) => unlockSkill(prev, id));
-
-      if (skill) {
-        showSuccessToast(`You've unlocked ${sanitizeText(skill.data.name)} 🔥`);
-      }
+      showSuccessToast(`You've unlocked ${sanitizeText(skill.data.name)} 🔥`);
     },
     [skills, prereqs],
   );
+
+  function resetState(): void {
+    // storage side-effect
+    resetTree();
+
+    // in-memory reset
+    setSkills([]);
+    setPrereqs([]);
+  }
 
   return {
     skills,
@@ -114,6 +120,7 @@ export function useSkillTree() {
     handleEdgesChange,
     handleConnect,
     handleUnlock,
+    resetState,
   };
 }
 
