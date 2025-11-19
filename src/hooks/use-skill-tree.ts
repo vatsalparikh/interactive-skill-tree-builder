@@ -13,13 +13,12 @@ import {
   type NodeChange,
 } from 'reactflow';
 
-import { showSuccessToast } from '../components/success-toast';
 import { createSkillNode } from '../helpers/create-node';
 import { hasCycle } from '../helpers/detect-cycle';
 import { addConnection, validateConnection } from '../helpers/edge-utils';
 import { loadTree, resetTree, saveTree } from '../helpers/local-storage';
 import { sanitizeText } from '../helpers/sanitize-input';
-import { showErrorToast } from '../helpers/toast-utils';
+import { showErrorToast, showSuccessToast } from '../helpers/toast-utils';
 import { canUnlock, unlockSkill } from '../helpers/unlock-utils';
 import type { SkillFormData, SkillNode } from '../types';
 

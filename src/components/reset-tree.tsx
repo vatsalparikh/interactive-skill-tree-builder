@@ -3,7 +3,7 @@
  * This software may be modified and distributed under the terms of the MIT license.
  */
 
-import { showSuccessToast } from '../components/success-toast';
+import { showSuccessToast } from '../helpers/toast-utils';
 
 export function ResetButton({ onReset }: { onReset: () => void }) {
   function handleClick(): void {

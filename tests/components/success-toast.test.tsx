@@ -1,91 +1,41 @@
-/*
- * Copyright (c) 2025
- * This software may be modified and distributed under the terms of the MIT license.
- */
-
-import type { ReactElement } from 'react';
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { toast } from 'react-hot-toast';
-import { beforeEach, describe, expect, it, type MockedFunction, vi } from 'vitest';
 
-import { showSuccessToast } from '../../src/components/success-toast';
+import { SuccessToast } from '../../src/components/success-toast';
 
-// -------------------------------------------------------------
-// Types for the toast element props and toast.custom
-// -------------------------------------------------------------
-interface SuccessToastProps {
-  className?: string;
-  children?: string;
-}
+describe('SuccessToast', () => {
+  it('renders the message text', () => {
+    render(<SuccessToast message="Saved successfully!" />);
 
-type ToastCustomFn = (
-  el: ReactElement<SuccessToastProps>,
-  options?: { duration?: number },
-) => unknown;
-
-// -------------------------------------------------------------
-// Strongly typed mock
-// -------------------------------------------------------------
-vi.mock('react-hot-toast', () => ({
-  toast: {
-    custom: vi.fn<ToastCustomFn>(), // <-- CORRECT Vitest typing
-  },
-}));
-
-beforeEach(() => {
-  vi.clearAllMocks();
-});
-
-describe('showSuccessToast', () => {
-  it('calls toast.custom with the correct JSX and duration', () => {
-    showSuccessToast('Saved!');
-
-    const mockedToastCustom = toast.custom as MockedFunction<ToastCustomFn>;
-
-    expect(mockedToastCustom).toHaveBeenCalledTimes(1);
-
-    expect(mockedToastCustom.mock.calls.length).toBeGreaterThan(0);
-
-    const call = mockedToastCustom.mock.calls[0];
-
-    const jsxElement = call[0];
-    const options = call[1];
-
-    expect(jsxElement).toBeDefined();
-
-    // Runtime narrowing
-    if (!React.isValidElement(jsxElement)) {
-      throw new Error('toast.custom must receive a React element');
-    }
-
-    // Type-safe React element
-    const element = jsxElement;
-
-    expect(element.props.children).toBe('Saved!');
-    expect(element.props.className).toContain('bg-green-100');
-    expect(element.props.className).toContain('text-green-900');
-
-    expect(options).toEqual({ duration: 2000 });
+    expect(screen.getByText('Saved successfully!')).toBeInTheDocument();
   });
 
-  it('passes through any message string', () => {
-    showSuccessToast('Hello World');
+  it('applies correct accessibility attributes', () => {
+    render(<SuccessToast message="Hello" />);
 
-    const mockedToastCustom = toast.custom as MockedFunction<ToastCustomFn>;
+    const toast = screen.getByRole('status');
 
-    expect(mockedToastCustom.mock.calls.length).toBeGreaterThan(0);
+    expect(toast).toHaveAttribute('aria-live', 'polite');
+    expect(toast).toHaveAttribute('aria-atomic', 'true');
+  });
 
-    const call = mockedToastCustom.mock.calls[0];
+  it('applies correct styling classes', () => {
+    render(<SuccessToast message="Styled message" />);
 
-    const jsxElement = call[0];
+    const toast = screen.getByRole('status');
 
-    expect(jsxElement).toBeDefined();
+    expect(toast.className).toContain('bg-green-100');
+    expect(toast.className).toContain('text-green-900');
+    expect(toast.className).toContain('px-4');
+    expect(toast.className).toContain('py-2');
+    expect(toast.className).toContain('rounded-md');
+    expect(toast.className).toContain('shadow');
+    expect(toast.className).toContain('text-sm');
+  });
 
-    if (!React.isValidElement(jsxElement)) {
-      throw new Error('toast.custom must receive a React element');
-    }
-
-    const element = jsxElement;
-    expect(element.props.children).toBe('Hello World');
+  it('matches snapshot', () => {
+    const { container } = render(<SuccessToast message="Snapshot test" />);
+    expect(container.firstChild).toMatchSnapshot();
   });
 });

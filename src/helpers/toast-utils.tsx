@@ -6,9 +6,14 @@
 import { toast } from 'react-hot-toast';
 
 import { ErrorToast } from '../components/error-toast';
+import { SuccessToast } from '../components/success-toast';
 
-export function showErrorToast(message: string): void {
-  toast.custom(<ErrorToast message={message} />, {
-    duration: 2000,
-  });
+export function showSuccessToast(message: string) {
+  toast.remove();
+  toast.custom(<SuccessToast message={message} />, { duration: 2000 });
+}
+
+export function showErrorToast(message: string) {
+  toast.remove();
+  toast.custom(<ErrorToast message={message} />, { duration: 2000 });
 }

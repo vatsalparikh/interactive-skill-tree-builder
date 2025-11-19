@@ -31,12 +31,10 @@ vi.mock('../../src/helpers/edge-utils', () => ({
 }));
 
 vi.mock('../../src/helpers/toast-utils', () => ({
+  showSuccessToast: vi.fn(),
   showErrorToast: vi.fn(),
 }));
 
-vi.mock('../../src/components/success-toast', () => ({
-  showSuccessToast: vi.fn(),
-}));
 
 vi.mock('../../src/helpers/unlock-utils', () => ({
   canUnlock: vi.fn(),
@@ -55,7 +53,7 @@ vi.mock('reactflow', () => ({
 import { applyEdgeChanges, applyNodeChanges } from 'reactflow';
 import type { MockedFunction } from 'vitest';
 
-import { showSuccessToast } from '../../src/components/success-toast';
+import { showSuccessToast } from '../../src/helpers/toast-utils';
 import { createSkillNode } from '../../src/helpers/create-node';
 import { hasCycle } from '../../src/helpers/detect-cycle';
 import { addConnection, validateConnection } from '../../src/helpers/edge-utils';

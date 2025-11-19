@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SuccessToast > matches snapshot 1`] = `
+<div
+  aria-atomic="true"
+  aria-live="polite"
+  class="bg-green-100 text-green-900 px-4 py-2 rounded-md shadow text-sm"
+  role="status"
+>
+  Snapshot test
+</div>
+`;
