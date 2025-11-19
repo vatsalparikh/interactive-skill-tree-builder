@@ -5,10 +5,13 @@
 
 /**
  * Accessibility:
- * 1. Hides the ReactFlow canvas from screen readers (aria-hidden)
- *    because the canvas is spatial/visual and would be noisy in SR output.
- * 2. Adds an sr-only textual fallback list of skills (id + name + level + prereqs)
- *    so screen reader users can discover nodes and read their names.
+ * 1. The ReactFlow canvas is left exposed to assistive technologies, since
+ *    hiding focusable controls (zoom, fit-view) would violate a11y rules.
+ * 2. A screen-reader-friendly fallback list is provided in an `sr-only` region,
+ *    giving full access to skill names, levels, and prerequisites in a
+ *    structured, readable format.
+ * 3. Visual graph interaction remains mouse/keyboard-driven, while the textual
+ *    list ensures the same information is available non-visually.
  */
 
 import { useCallback, useMemo } from 'react';
@@ -65,7 +68,7 @@ export default function Flow({
   );
 
   return (
-    <div className='h-full w-full' aria-hidden='true'>
+    <div className='h-full w-full'>
       <ReactFlow
         nodes={skills}
         edges={prereqs}

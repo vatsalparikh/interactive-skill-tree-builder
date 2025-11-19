@@ -82,8 +82,7 @@ src/<br>
 
 ## Accessibility
 
-- Canvas visually rich but hidden from screen readers (`aria-hidden`)
-- Screen-reader-only textual list presented below
+- Screen-reader-only textual list presented for react flow
 - Form fields have `aria-invalid`, `aria-describedby`, and validation messages
 - All interactive elements are properly labeled
 
