@@ -7,6 +7,7 @@ import type { Edge } from 'reactflow';
 
 import type { SkillNode } from '../types';
 import { sanitizeText } from './sanitize-input';
+import { showErrorToast } from './toast-utils';
 
 const STORAGE_KEY = 'skill-tree-state';
 
@@ -114,6 +115,13 @@ export function saveTree(data: SkillTree): void {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   } catch (err) {
     console.error('[saveTree] Failed to save skill tree', err);
+
+    // Check if quota exceeded
+    if (err instanceof DOMException && err.name === 'QuotaExceededError') {
+      showErrorToast('Storage full! Unable to save changes. Try removing some skills.');
+    } else {
+      showErrorToast('Failed to save changes. Please try again.');
+    }
   }
 }
 

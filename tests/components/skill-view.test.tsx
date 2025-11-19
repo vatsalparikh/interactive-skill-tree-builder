@@ -104,7 +104,7 @@ describe('SkillView', () => {
       />,
     );
 
-    const article = container.querySelector('article');
+    const article = container.querySelector('article') as HTMLElement;
     expect(article).toBeInTheDocument();
 
     // Unlocked classes should be present
@@ -117,9 +117,7 @@ describe('SkillView', () => {
     const dimmedDiv = container.querySelector('div.opacity-60');
     expect(dimmedDiv).toBeInTheDocument();
 
-    // Highlight style should be applied (boxShadow)
-    // Use toHaveStyle provided by jest-dom
-    expect(article).toHaveStyle('box-shadow: 0 0 10px 2px rgba(37, 99, 235, 0.8)');
+    expect(article.className).toContain('[box-shadow:0_0_10px_2px_rgba(37,99,235,0.8)]');
 
     // Handles still present
     expect(screen.getByTestId('handle-source')).toBeInTheDocument();
@@ -160,7 +158,7 @@ describe('SkillView', () => {
     expect(article).not.toHaveStyle('box-shadow: 0 0 10px 2px rgba(37, 99, 235, 0.8)');
 
     // Content should be fully opaque
-    const contentDiv = container.querySelector('div.opacity-100');
+    const contentDiv = container.querySelector('div[class*="opacity-100"]');
     expect(contentDiv).toBeInTheDocument();
 
     // Level should not be rendered when undefined

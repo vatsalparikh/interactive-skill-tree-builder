@@ -36,16 +36,17 @@ export default function SkillView({
     shadow-[inset_0_0_0_2px_rgba(16,185,129,0.55)]
   `;
 
-  const highlightStyle = isHighlighted ? { boxShadow: '0 0 10px 2px rgba(37, 99, 235, 0.8)' } : {};
-
   return (
     <article
       role='group'
       aria-label={
         data.level !== undefined ? `${data.name}, Level ${String(data.level)}` : data.name
       }
-      className={[base, isUnlocked ? unlocked : locked].join(' ')}
-      style={highlightStyle}
+      className={[
+        base,
+        isUnlocked ? unlocked : locked,
+        isHighlighted ? '[box-shadow:0_0_10px_2px_rgba(37,99,235,0.8)]' : '',
+      ].join(' ')}
     >
       <Handle type='source' position={Position.Bottom} aria-hidden='true' />
       <Handle type='target' position={Position.Top} aria-hidden='true' />
