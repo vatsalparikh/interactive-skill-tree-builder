@@ -32,6 +32,12 @@ export function validateConnection(edges: Edge[], conn: Connection): boolean {
   return true;
 }
 
+/**
+ * Ensures an edge is valid before adding it:
+ * - Rejects self-loops
+ * - Rejects duplicates
+ * - Ensures well-formed connection object
+ */
 export function addConnection(edges: Edge[], conn: Connection): Edge[] {
   const sourceId = conn.source;
   const targetId = conn.target;

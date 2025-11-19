@@ -16,14 +16,13 @@ export interface SkillTree {
   prereqs: Edge[];
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                VALIDATION                                  */
-/* -------------------------------------------------------------------------- */
+// Validate deserialized data to defend against user-edited localStorage and ensure the app loads only safe, well-formed state.
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
+// Validate loaded skill objects to prevent malformed or tampered localStorage data from breaking the app.
 function isValidSkillNode(value: unknown): value is SkillNode {
   if (!isObject(value)) return false;
 
@@ -59,17 +58,13 @@ function isValidSkillNode(value: unknown): value is SkillNode {
 
   return true;
 }
-
+// Validate loaded edges to ensure corrupt or hand-edited localStorage entries cannot create invalid graph connections.
 function isValidEdge(value: unknown): value is Edge {
   if (!isObject(value)) return false;
   if (typeof value.source !== 'string') return false;
   if (typeof value.target !== 'string') return false;
   return true;
 }
-
-/* -------------------------------------------------------------------------- */
-/*                                  LOAD / SAVE                               */
-/* -------------------------------------------------------------------------- */
 
 export function loadTree(): SkillTree | null {
   try {

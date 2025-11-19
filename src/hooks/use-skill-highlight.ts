@@ -10,17 +10,19 @@ import { MarkerType } from 'reactflow';
 import { getHighlightedEdgeIds, getHighlightedNodeIds } from '../helpers/search-utils';
 import type { SkillNode } from '../types';
 
+// Computes highlighted nodes/edges and returns memoized view-model versions of skills and prereqs.
 export function useSkillHighlight(skills: SkillNode[], prereqs: Edge[], query: string) {
   const highlightedNodeIds: Set<string> = useMemo(() => {
-    // reuse existing helper (which already does filtering + ancestor lookup)
-    // but if you prefer, call getAncestorNodeIds separately. Using existing helper keeps this minimal.
+    // Determine which nodes match the search query and include all their ancestor nodes
     return getHighlightedNodeIds(skills, prereqs, query);
   }, [skills, prereqs, query]);
 
+  // Highlight edges that belong to the prerequisite path of highlighted nodes.
   const highlightedEdgeIds: Set<string> = useMemo(() => {
     return getHighlightedEdgeIds(prereqs, highlightedNodeIds);
   }, [prereqs, highlightedNodeIds]);
 
+  // Produce a view-model of skills with isHighlighted/isDimmed flags applied.
   const viewSkills: SkillNode[] = useMemo(() => {
     const hasHighlights = highlightedNodeIds.size > 0;
     return skills.map((skill) => {
@@ -37,6 +39,7 @@ export function useSkillHighlight(skills: SkillNode[], prereqs: Edge[], query: s
     });
   }, [skills, highlightedNodeIds]);
 
+  // Apply highlight/dim styling to prerequisite edges for visual emphasis.
   const viewPrereqs: Edge[] = useMemo(() => {
     const hasHighlightedEdges = highlightedEdgeIds.size > 0;
     return prereqs.map((e) => {

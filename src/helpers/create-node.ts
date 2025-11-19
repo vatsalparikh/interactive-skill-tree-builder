@@ -5,6 +5,7 @@
 
 import type { SkillFormData, SkillNode } from '../types';
 
+// Creates a new skill node with default locked state and ReactFlow config.
 export function createSkillNode(data: SkillFormData): SkillNode {
   // this randomizes the position of the nodes after creation
   // to avoid complete node overlap

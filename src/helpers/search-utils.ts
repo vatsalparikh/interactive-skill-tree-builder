@@ -26,6 +26,10 @@ export function getAncestorNodeIds(edges: Edge[], targets: Set<string>) {
   return ancestors;
 }
 
+/**
+ * Returns all nodes that match the search query, plus all their ancestor nodes.
+ * This ensures the full prerequisite path is highlighted during search.
+ */
 export function getHighlightedNodeIds(
   skills: SkillNode[],
   edges: Edge[],
@@ -45,6 +49,10 @@ export function getHighlightedNodeIds(
   return new Set([...matches, ...ancestors]);
 }
 
+/**
+ * Returns edges whose source or target nodes are highlighted.
+ * Used to highlight prerequisite relationships in the graph.
+ */
 export function getHighlightedEdgeIds(edges: Edge[], highlightedNodeIds: Set<string>): Set<string> {
   const highlightedEdges = new Set<string>();
 
