@@ -3,7 +3,9 @@
  * This software may be modified and distributed under the terms of the MIT license.
  */
 
-import { render } from '@testing-library/react';
+import React from 'react';
+
+import { render, screen } from '@testing-library/react';
 import type { Edge } from 'reactflow';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -174,5 +176,174 @@ describe('Flow component', () => {
 
     expect(getByTestId('rf-background')).toBeInTheDocument();
     expect(getByTestId('rf-controls')).toBeInTheDocument();
+  });
+});
+
+describe('Flow A11y List Rendering', () => {
+  function renderFlow(skills: SkillNode[], prereqs: Edge[]) {
+    return render(
+      <Flow
+        skills={skills}
+        prereqs={prereqs}
+        onNodesChange={() => {}}
+        onEdgesChange={() => {}}
+        onConnect={() => {}}
+        onUnlock={() => {}}
+        highlightedNodeIds={new Set()}
+        highlightedEdgeIds={new Set()}
+      />,
+    );
+  }
+
+  it('renders a list of skills with basic fields', () => {
+    const skills: SkillNode[] = [
+      {
+        id: 'a',
+        type: 'skill',
+        position: { x: 0, y: 0 },
+        data: {
+          name: 'Skill A',
+          description: 'Desc',
+          isUnlocked: false,
+        },
+      },
+    ];
+
+    renderFlow(skills, []);
+
+    const region = screen.getByRole('region', {
+      name: 'Skill list',
+      hidden: true,
+    });
+    expect(region).toBeInTheDocument();
+
+    const list = screen.getByRole('list', { hidden: true });
+    expect(list).toBeInTheDocument();
+
+    const items = screen.getAllByRole('listitem', { hidden: true });
+    expect(items.length).toBe(1);
+
+    expect(items[0]).toHaveTextContent('Skill A (locked)');
+  });
+
+  it('shows level only when defined', () => {
+    const skills: SkillNode[] = [
+      {
+        id: 'b',
+        type: 'skill',
+        position: { x: 0, y: 0 },
+        data: {
+          name: 'Skill B',
+          description: 'Desc',
+          isUnlocked: true,
+          level: 3,
+        },
+      },
+    ];
+
+    renderFlow(skills, []);
+
+    const text = screen.getByText(/Skill B — Level 3 \(unlocked\)/);
+    expect(text).toBeInTheDocument();
+  });
+
+  it('omits level when undefined', () => {
+    const skills: SkillNode[] = [
+      {
+        id: 'c',
+        type: 'skill',
+        position: { x: 0, y: 0 },
+        data: {
+          name: 'Skill C',
+          description: 'Desc',
+          isUnlocked: true,
+          // no level
+        },
+      },
+    ];
+
+    renderFlow(skills, []);
+
+    const item = screen.getByText(/Skill C \(unlocked\)/);
+    expect(item).toBeInTheDocument();
+    expect(item).not.toHaveTextContent('Level');
+  });
+
+  it('shows prerequisites when they exist', () => {
+    const skills: SkillNode[] = [
+      {
+        id: 'x',
+        type: 'skill',
+        position: { x: 0, y: 0 },
+        data: { name: 'Skill X', description: 'D', isUnlocked: true },
+      },
+      {
+        id: 'y',
+        type: 'skill',
+        position: { x: 0, y: 0 },
+        data: { name: 'Skill Y', description: 'D', isUnlocked: false },
+      },
+    ];
+
+    const prereqs: Edge[] = [{ id: 'x->y', source: 'x', target: 'y' }];
+
+    renderFlow(skills, prereqs);
+
+    const item = screen.getByText(/Skill Y \(locked\) — Prerequisites: Skill X/);
+    expect(item).toBeInTheDocument();
+  });
+
+  it('handles multiple prerequisites', () => {
+    const skills: SkillNode[] = [
+      {
+        id: 'a',
+        type: 'skill',
+        position: { x: 0, y: 0 },
+        data: { name: 'Alpha', description: 'D', isUnlocked: true },
+      },
+      {
+        id: 'b',
+        type: 'skill',
+        position: { x: 0, y: 0 },
+        data: { name: 'Beta', description: 'D', isUnlocked: true },
+      },
+      {
+        id: 'c',
+        type: 'skill',
+        position: { x: 0, y: 0 },
+        data: { name: 'Gamma', description: 'D', isUnlocked: false },
+      },
+    ];
+
+    const prereqs: Edge[] = [
+      { id: 'a->c', source: 'a', target: 'c' },
+      { id: 'b->c', source: 'b', target: 'c' },
+    ];
+
+    renderFlow(skills, prereqs);
+
+    const item = screen.getByText(/Gamma \(locked\) — Prerequisites: Alpha, Beta/);
+    expect(item).toBeInTheDocument();
+  });
+
+  it('ignores prereqs whose source node does not exist', () => {
+    const skills: SkillNode[] = [
+      {
+        id: 't',
+        type: 'skill',
+        position: { x: 0, y: 0 },
+        data: { name: 'Target', description: 'D', isUnlocked: false },
+      },
+    ];
+
+    const prereqs: Edge[] = [
+      { id: 'ghost->t', source: 'ghost', target: 't' }, // no matching skill
+    ];
+
+    renderFlow(skills, prereqs);
+
+    // Should NOT include "Prerequisites"
+    const item = screen.getByText(/Target \(locked\)$/); // end-of-line
+    expect(item).toBeInTheDocument();
   });
 });

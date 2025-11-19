@@ -18,6 +18,7 @@ import { createSkillNode } from '../helpers/create-node';
 import { hasCycle } from '../helpers/detect-cycle';
 import { addConnection, validateConnection } from '../helpers/edge-utils';
 import { loadTree, saveTree } from '../helpers/local-storage';
+import { sanitizeText } from '../helpers/sanitize-input';
 import { showErrorToast } from '../helpers/toast-utils';
 import { canUnlock, unlockSkill } from '../helpers/unlock-utils';
 import type { SkillFormData, SkillNode } from '../types';
@@ -33,7 +34,13 @@ export function useSkillTree() {
   }, [skills, prereqs]);
 
   const handleAddSkill = useCallback((data: SkillFormData) => {
-    setSkills((prev) => [...prev, createSkillNode(data)]);
+    const safeData: SkillFormData = {
+      name: sanitizeText(data.name),
+      description: sanitizeText(data.description),
+      level: data.level,
+    };
+
+    setSkills((prev) => [...prev, createSkillNode(safeData)]);
   }, []);
 
   const handleNodesChange = useCallback((changes: NodeChange[]) => {
@@ -78,7 +85,7 @@ export function useSkillTree() {
       setSkills((prev) => unlockSkill(prev, id));
 
       if (skill) {
-        showSuccessToast(`You've unlocked ${skill.data.name} 🔥`);
+        showSuccessToast(`You've unlocked ${sanitizeText(skill.data.name)} 🔥`);
       }
     },
     [skills, prereqs],

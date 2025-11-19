@@ -16,6 +16,7 @@ Completed both extension features, "preventing cycles with user feedback" and "s
 
 ## Explanation
 
+Security: input sanization, local storage security, safe package dependencies
 Accessibility: Tried to make the UI as accessible as possible
 Connecting nodes: Nodes can only be connected from bottom handle of one node to top handle of another node. Any other combination (top to bottom / top to top / bottom to bottom) will fail silently. This is also explained in short below skill legends on bottom left of the page
 
