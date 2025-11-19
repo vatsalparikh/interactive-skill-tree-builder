@@ -39,10 +39,17 @@ export default function SkillView({
   const highlightStyle = isHighlighted ? { boxShadow: '0 0 10px 2px rgba(37, 99, 235, 0.8)' } : {};
 
   return (
-    <article className={[base, isUnlocked ? unlocked : locked].join(' ')} style={highlightStyle}>
-      <Handle type='source' position={Position.Bottom} />
-      <Handle type='target' position={Position.Top} />
-      <div className={isDimmed ? 'opacity-40' : 'opacity-100'}>
+    <article
+      role='group'
+      aria-label={
+        data.level !== undefined ? `${data.name}, Level ${String(data.level)}` : data.name
+      }
+      className={[base, isUnlocked ? unlocked : locked].join(' ')}
+      style={highlightStyle}
+    >
+      <Handle type='source' position={Position.Bottom} aria-hidden='true' />
+      <Handle type='target' position={Position.Top} aria-hidden='true' />
+      <div className={isDimmed ? 'opacity-60' : 'opacity-100'}>
         <header className='flex items-start gap-2'>
           <p className='font-semibold text-sm text-gray-900 leading-tight break-words whitespace-normal overflow-hidden max-w-full'>
             {data.name}

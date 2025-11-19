@@ -12,7 +12,7 @@ describe('SearchBar', () => {
   it('renders input with the provided value', () => {
     render(<SearchBar value='Fireball' onChange={vi.fn()} />);
 
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('searchbox');
     expect(input).toBeInTheDocument();
     expect(input).toHaveValue('Fireball');
   });
@@ -28,7 +28,7 @@ describe('SearchBar', () => {
     const onChange = vi.fn();
     render(<SearchBar value='' onChange={onChange} />);
 
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('searchbox');
 
     fireEvent.change(input, { target: { value: 'flame' } });
 
@@ -39,10 +39,10 @@ describe('SearchBar', () => {
   it('has correct id and type attributes', () => {
     render(<SearchBar value='' onChange={vi.fn()} />);
 
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('searchbox');
 
     expect(input).toHaveAttribute('id', 'skill-search');
-    expect(input).toHaveAttribute('type', 'text');
+    expect(input).toHaveAttribute('type', 'search');
   });
 
   it('renders the hidden label for accessibility', () => {

@@ -3,6 +3,14 @@
  * This software may be modified and distributed under the terms of the MIT license.
  */
 
+/**
+ * Accessibility:
+ * 1. Hides the ReactFlow canvas from screen readers (aria-hidden)
+ *    because the canvas is spatial/visual and would be noisy in SR output.
+ * 2. Adds an sr-only textual fallback list of skills (id + name + level + prereqs)
+ *    so screen reader users can discover nodes and read their names.
+ */
+
 import ReactFlow, {
   Background,
   Controls,
@@ -46,7 +54,7 @@ export default function Flow({
   };
 
   return (
-    <div className='h-full w-full'>
+    <div className='h-full w-full' aria-hidden='true'>
       <ReactFlow
         nodes={skills}
         edges={prereqs}
@@ -63,6 +71,36 @@ export default function Flow({
         <Background />
         <Controls />
       </ReactFlow>
+
+      {/* Screen-reader-friendly fallback: textual list of skills and prereqs */}
+      <div role='region' aria-label='Skill list' className='sr-only'>
+        <ul>
+          {skills.map((s) => {
+            const incoming = prereqs.filter((e) => e.target === s.id);
+
+            const prereqNames = incoming
+              .map((e) => skills.find((n) => n.id === e.source)?.data.name)
+              .filter(Boolean);
+
+            return (
+              <li key={s.id}>
+                {s.data.name}
+
+                {s.data.level !== undefined && (
+                  <>
+                    {' — Level '}
+                    {s.data.level}
+                  </>
+                )}
+
+                {s.data.isUnlocked ? ' (unlocked)' : ' (locked)'}
+
+                {prereqNames.length > 0 && <> — Prerequisites: {prereqNames.join(', ')}</>}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }

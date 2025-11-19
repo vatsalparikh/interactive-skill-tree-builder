@@ -10,15 +10,16 @@ interface SearchBarProps {
 
 export default function SearchBar({ value, onChange }: SearchBarProps) {
   return (
-    <div className='py-3'>
-      <label htmlFor='search' className='sr-only'>
+    <div className='py-3' role='search'>
+      <label htmlFor='skill-search' className='sr-only'>
         Search skills by name
       </label>
 
       <input
         id='skill-search'
-        type='text'
+        type='search'
         value={value}
+        aria-label='Search skills by name'
         onChange={(e) => {
           onChange(e.target.value);
         }}

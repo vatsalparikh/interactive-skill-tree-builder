@@ -9,6 +9,13 @@ interface ErrorToastProps {
 
 export function ErrorToast({ message }: ErrorToastProps) {
   return (
-    <div className='bg-red-100 text-red-900 px-4 py-3 rounded-md shadow text-sm'>{message}</div>
+    <div
+      role='alert'
+      aria-live='assertive'
+      aria-atomic='true'
+      className='bg-red-100 text-red-900 px-4 py-3 rounded-md shadow text-sm'
+    >
+      {message}
+    </div>
   );
 }

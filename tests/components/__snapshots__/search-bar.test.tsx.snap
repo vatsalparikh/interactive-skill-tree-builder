@@ -3,14 +3,16 @@
 exports[`SearchBar > matches snapshot 1`] = `
 <div
   class="py-3"
+  role="search"
 >
   <label
     class="sr-only"
-    for="search"
+    for="skill-search"
   >
     Search skills by name
   </label>
   <input
+    aria-label="Search skills by name"
     class="
             w-full
             pl-5 pr-4 py-2
@@ -25,7 +27,7 @@ exports[`SearchBar > matches snapshot 1`] = `
           "
     id="skill-search"
     placeholder="Search skills by name"
-    type="text"
+    type="search"
     value="snapshot-test"
   />
 </div>

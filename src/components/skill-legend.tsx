@@ -5,13 +5,13 @@
 
 export function SkillLegend() {
   return (
-    <div className='pl-1 text-xs text-gray-600 space-y-2'>
-      <div className='flex items-center space-x-2'>
+    <div className='pl-1 text-xs text-gray-600 space-y-2' role='list'>
+      <div className='flex items-center space-x-2' role='listitem'>
         <span role='presentation' className='w-3 h-3 rounded-sm bg-white border border-gray-300' />
         <span>Locked</span>
       </div>
 
-      <div className='flex items-center space-x-2'>
+      <div className='flex items-center space-x-2' role='listitem'>
         <span
           role='presentation'
           className='
@@ -23,7 +23,7 @@ export function SkillLegend() {
         <span>Unlocked</span>
       </div>
 
-      <div className='flex items-center space-x-2'>
+      <div className='flex items-center space-x-2' role='listitem'>
         <span
           role='presentation'
           className='
@@ -33,14 +33,12 @@ export function SkillLegend() {
         />
         <span>Highlighted (search)</span>
       </div>
-  
-<div className="flex items-center space-x-2 pt-1">
-  <span className="w-3 h-3 flex items-center justify-center text-[10px]">●</span>
-  <span>Connect bottom handle to top handle</span>
-</div>
-    </div>
-  
 
+      <div className='flex items-center space-x-2 pt-1' role='listitem'>
+        <span className='w-3 h-3 flex items-center justify-center text-[10px]'>●</span>
+        <span>Connect bottom handle to top handle</span>
+      </div>
+    </div>
   );
 }
 

@@ -18,8 +18,9 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
   const [errors, setErrors] = useState({ name: '', description: '', level: '' });
 
   function validateName(value: string): string {
-    return value.trim() ? '' : 'Name is required';
+    if (!value.trim()) return 'Name is required';
     if (value.trim().length > 50) return 'Name must be 50 characters or less';
+    return '';
   }
 
   function validateDescription(value: string): string {
@@ -80,6 +81,8 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
           type='text'
           maxLength={50}
           value={name}
+          aria-invalid={errors.name ? 'true' : 'false'}
+          aria-describedby={errors.name ? 'name-error' : undefined}
           onChange={(e) => {
             setName(e.target.value);
           }}
@@ -89,7 +92,14 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
           className={`w-full px-3 py-2 border rounded ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
         />
         <div className='flex justify-between items-start min-h-[1.5rem] mt-1'>
-          <p className='text-red-600 text-sm'>{errors.name}</p>
+          <p
+            id='name-error'
+            aria-hidden={errors.name ? 'false' : 'true'}
+            aria-live='polite'
+            className='text-red-600 text-sm'
+          >
+            {errors.name}
+          </p>
           <p className='text-gray-500 text-sm'>{name.length}/50</p>
         </div>
       </div>
@@ -100,18 +110,27 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
         </label>
         <textarea
           id='description'
+          rows={3}
           value={description}
+          aria-invalid={errors.description ? 'true' : 'false'}
+          aria-describedby={errors.description ? 'description-error' : undefined}
           onChange={(e) => {
             setDescription(e.target.value);
           }}
           onBlur={() => {
             setErrors((e) => ({ ...e, description: validateDescription(description) }));
           }}
-          rows={3}
           className={`w-full px-3 py-2 border rounded ${errors.description ? 'border-red-500' : 'border-gray-300'}`}
         />
         <div className='flex justify-between items-start min-h-[2.5rem] mt-1'>
-          <p className='text-red-600 text-sm'>{errors.description}</p>
+          <p
+            id='description-error'
+            aria-hidden={errors.description ? 'false' : 'true'}
+            aria-live='polite'
+            className='text-red-600 text-sm'
+          >
+            {errors.description}
+          </p>
           <p className='text-gray-500 text-sm'>{description.length}/150</p>
         </div>
       </div>
@@ -123,18 +142,27 @@ export default function SkillForm({ onSubmit }: SkillFormProps) {
         <input
           id='level'
           type='number'
+          min='0'
+          max='999'
           value={level}
+          aria-invalid={errors.level ? 'true' : 'false'}
+          aria-describedby={errors.level ? 'level-error' : undefined}
           onChange={(e) => {
             setLevel(e.target.value);
           }}
           onBlur={() => {
             setErrors((e) => ({ ...e, level: validateLevel(level) }));
           }}
-          min='0'
-          max='999'
           className={`w-full px-3 py-2 border rounded ${errors.level ? 'border-red-500' : 'border-gray-300'}`}
         />
-        <p className='min-h-[2.5rem] mt-1 text-red-600 text-sm'>{errors.level}</p>
+        <p
+          id='level-error'
+          aria-hidden={errors.level ? 'false' : 'true'}
+          aria-live='polite'
+          className='min-h-[2.5rem] mt-1 text-red-600 text-sm'
+        >
+          {errors.level}
+        </p>
       </div>
 
       <button

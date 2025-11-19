@@ -114,7 +114,7 @@ describe('SkillView', () => {
     expect(screen.getByText('Level 3')).toBeInTheDocument();
 
     // Dimmed child div should have opacity-40 class
-    const dimmedDiv = container.querySelector('div.opacity-40');
+    const dimmedDiv = container.querySelector('div.opacity-60');
     expect(dimmedDiv).toBeInTheDocument();
 
     // Highlight style should be applied (boxShadow)
