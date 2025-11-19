@@ -35,7 +35,6 @@ vi.mock('../../src/helpers/toast-utils', () => ({
   showErrorToast: vi.fn(),
 }));
 
-
 vi.mock('../../src/helpers/unlock-utils', () => ({
   canUnlock: vi.fn(),
   unlockSkill: vi.fn(),

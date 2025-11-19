@@ -11,6 +11,7 @@
  *    so screen reader users can discover nodes and read their names.
  */
 
+import { useCallback, useMemo } from 'react';
 import ReactFlow, {
   Background,
   Controls,
@@ -49,9 +50,19 @@ export default function Flow({
   onConnect,
   onUnlock,
 }: FlowProps) {
-  const handleNodeClick: NodeMouseHandler = (_evt, node) => {
-    if (node.type === 'skill') onUnlock(node.id);
-  };
+  const handleNodeClick: NodeMouseHandler = useCallback(
+    (_evt, node) => {
+      if (node.type === 'skill') onUnlock(node.id);
+    },
+    [onUnlock],
+  );
+
+  const defaultEdgeOptions = useMemo(
+    () => ({
+      markerEnd: { type: MarkerType.ArrowClosed },
+    }),
+    [],
+  );
 
   return (
     <div className='h-full w-full' aria-hidden='true'>
@@ -61,9 +72,7 @@ export default function Flow({
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        defaultEdgeOptions={{
-          markerEnd: { type: MarkerType.ArrowClosed },
-        }}
+        defaultEdgeOptions={defaultEdgeOptions}
         onConnect={onConnect}
         onNodeClick={handleNodeClick}
         fitView

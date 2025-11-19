@@ -6,13 +6,13 @@ import { SuccessToast } from '../../src/components/success-toast';
 
 describe('SuccessToast', () => {
   it('renders the message text', () => {
-    render(<SuccessToast message="Saved successfully!" />);
+    render(<SuccessToast message='Saved successfully!' />);
 
     expect(screen.getByText('Saved successfully!')).toBeInTheDocument();
   });
 
   it('applies correct accessibility attributes', () => {
-    render(<SuccessToast message="Hello" />);
+    render(<SuccessToast message='Hello' />);
 
     const toast = screen.getByRole('status');
 
@@ -21,7 +21,7 @@ describe('SuccessToast', () => {
   });
 
   it('applies correct styling classes', () => {
-    render(<SuccessToast message="Styled message" />);
+    render(<SuccessToast message='Styled message' />);
 
     const toast = screen.getByRole('status');
 
@@ -35,7 +35,7 @@ describe('SuccessToast', () => {
   });
 
   it('matches snapshot', () => {
-    const { container } = render(<SuccessToast message="Snapshot test" />);
+    const { container } = render(<SuccessToast message='Snapshot test' />);
     expect(container.firstChild).toMatchSnapshot();
   });
 });

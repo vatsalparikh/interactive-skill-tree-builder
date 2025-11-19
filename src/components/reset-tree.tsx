@@ -8,7 +8,7 @@ import { showSuccessToast } from '../helpers/toast-utils';
 export function ResetButton({ onReset }: { onReset: () => void }) {
   function handleClick(): void {
     onReset();
-    showSuccessToast('Skill tree reset successfully');
+    showSuccessToast('Tree reset successfully');
   }
 
   return (
