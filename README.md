@@ -27,6 +27,7 @@ Completed both extension features:
 2. Search and filter nodes by name and highlight matching nodes and paths
 
 ## Disclosure of any AI tool usage
+
 - I used AI tools like ChatGPT during development primarily to learn React Flow APIs, validate architectural decisions, code reviews, assist in generating unit test scaffolding to reach full coverage, and to help generate some Tailwind and CSS styling ideas
 - All core implementation, component logic, and final code were written and authored by me, with AI serving as a learning and productivity aid
 
