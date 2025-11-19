@@ -35,14 +35,7 @@ export function SkillLegend() {
       </div>
   
 <div className="flex items-center space-x-2 pt-1">
-  <span
-    className="
-      inline-block
-      w-2 h-2 
-      border-t-2 border-r-2 border-gray-500 
-      rotate-45
-    "
-  />
+  <span className="w-3 h-3 flex items-center justify-center text-[10px]">●</span>
   <span>Connect bottom handle to top handle</span>
 </div>
     </div>
