@@ -4,6 +4,12 @@ React Flow's own styles
 */
 @import 'reactflow/dist/style.css';
 
+/*
+https://github.com/ForgeRock/forgerock-web-login-framework?tab=readme-ov-file#import-the-css
+ForgeRock Login Widget's own styles
+*/
+@import '@forgerock/login-widget/widget.css';
+
 @import 'tailwindcss';
 
 html,
